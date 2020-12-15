@@ -17,6 +17,22 @@ public class Encryption {
 		return encryptedPassword;
 	}
 	
+	public static String decrypt(String encryptedPassword) {
+
+		int key = Integer.parseInt(System.getenv("ERS_EncryptionKey"));
+		StringBuilder stringBuilder = new StringBuilder();
+		char[] characters = encryptedPassword.toCharArray();
+		
+		for(char c : characters) {
+			c -= key;
+			stringBuilder.append(c);
+		}
+		
+		String decryptedPassword = stringBuilder.toString();
+		return decryptedPassword;
+		
+	}
+	
 //	public static void main(String[] args) {
 //		String password = "This is my super-secret password!";
 //		System.out.println("Password: " + password);
@@ -24,7 +40,7 @@ public class Encryption {
 //		String encryptedPassword = encrypt(password);
 //		System.out.println("Encrypted Password is: " + encryptedPassword);
 //		
-//		if(password.equals(Decryption.decrypt(encryptedPassword))) {
+//		if(password.equals(decrypt(encryptedPassword))) {
 //			System.out.println("Encryption and Decryption work as desired.");
 //		}else {
 //			System.out.println("Something went wrong with either Encryption or Decryption.");

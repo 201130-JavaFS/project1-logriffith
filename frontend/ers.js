@@ -1,4 +1,4 @@
-const url = 'http://localhost:8080/project1/';
+const url = 'http://localhost:8080/project-1/';
 
 document.getElementById("loginbtn").addEventListener("click",login);
 
@@ -25,6 +25,27 @@ async function login(){
         document.getElementById("login-row").innerHTML = '';
         console.log(loginResponse);
         console.log(user);
-        
+
+        let logout = document.createElement("div");
+        logout.id = "logout-row";
+        logout.className = "row";
+
+        let logoutButton = document.createElement("button");
+        logoutButton.id = "logoutbtn";
+        logoutButton.className = "btn btn-primary";
+        logout.appendChild(logoutButton);
+
+        let identifier = document.createElement("p");
+        identifier.id = "identifyuser";
+        logout.appendChild(identifier);
+
+        document.getElementById("identifyuser").innerText = user.role + ": " + user.firstName + " " + user.lastName;
+        document.getElementById("logout-row").appendChild(logout);
+
+        //document.getElementById("logoutbtn").addEventListener("click",logout);
     }
 };
+
+//async function logout(){
+
+//};

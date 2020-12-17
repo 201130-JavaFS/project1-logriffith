@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.ers.models.LoginDTO;
+import com.ers.models.User;
 import com.ers.services.ConfirmLogin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -31,6 +32,10 @@ public class LoginController {
 			LoginDTO loginDTO = objectMapper.readValue(body, LoginDTO.class); //takes the JSON data as a string and stores it as a LoginDTO object
 			if(confirmLogin.login(loginDTO.username, loginDTO.password) != null) {
 				HttpSession httpSession = request.getSession();//returns the current session or creates one if it doesn't exist
+
+				User user = confirmLogin.login(loginDTO.username, loginDTO.password);
+				String json = objectMapper.writeValueAsString(user);//converts the user into a JSON String 
+				response.getWriter().print(json);
 				
 				//these setAttributes remain in the server
 				httpSession.setAttribute("user", loginDTO);

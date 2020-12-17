@@ -16,7 +16,7 @@ public class PrimaryServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		response.setContentType("application/json");
 		response.setStatus(404);//change status code later if something is found
-		final String URI = request.getRequestURI().replace("/project1/", "");//removes all the base info
+		final String URI = request.getRequestURI().replace("/project-1/", "");//removes all the base info
 		switch(URI) {
 			case "login":
 				loginController.login(request,response);

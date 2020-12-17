@@ -24,4 +24,9 @@ public class PrimaryServlet extends HttpServlet {
 		}
 	}
 	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		response.setContentType("application/json");
+		doGet(request,response);
+	}
+	
 }

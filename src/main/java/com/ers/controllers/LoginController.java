@@ -36,13 +36,17 @@ public class LoginController {
 				httpSession.setAttribute("user", loginDTO);
 				httpSession.setAttribute("logged in", true);
 				response.setStatus(200);//login was successful
-				response.getWriter().print("Login was Successful");//"Login Successful" is a check for me in Postman, it will not be seen by the client
+				response.getWriter().print("Login Successful");//"Login Successful" is a check for me in Postman, it will not be seen by the client
 			}else {
 				HttpSession httpSession = request.getSession(false);//returns the session or null if one doesn't already exist
 				if(httpSession != null) {
 					httpSession.invalidate();//deletes the session/logs them out
 				}
+				response.setStatus(401);
+				response.getWriter().print("Login Failed");
 			}
+		}else {
+			System.out.println("Wrong method was used.");
 		}
 		
 	}

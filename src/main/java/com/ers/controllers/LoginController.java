@@ -34,6 +34,7 @@ public class LoginController {
 				HttpSession httpSession = request.getSession();//returns the current session or creates one if it doesn't exist
 
 				User user = confirmLogin.login(loginDTO.username, loginDTO.password);
+				//user.setPassword(null);
 				String json = objectMapper.writeValueAsString(user);//converts the user into a JSON String 
 				response.getWriter().print(json);
 				
@@ -41,7 +42,6 @@ public class LoginController {
 				httpSession.setAttribute("user", loginDTO);
 				httpSession.setAttribute("logged in", true);
 				response.setStatus(200);//login was successful
-				response.getWriter().print("Login Successful");//"Login Successful" is a check for me in Postman, it will not be seen by the client
 			}else {
 				HttpSession httpSession = request.getSession(false);//returns the session or null if one doesn't already exist
 				if(httpSession != null) {

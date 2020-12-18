@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang = "en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
     <title>Employee Reimbursement System</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel = "stylesheet" href = "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity = "sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin = "anonymous">
     <style>
        table {
             text-align: center;
@@ -13,7 +13,7 @@
 
         #login-row {
             margin: auto;
-            width: 30%;
+            width: 35%;
             padding: 200px 0px;
         }
 
@@ -35,22 +35,45 @@
             margin: auto;
             width: 40%;
         }
+
+        #message{
+            margin: auto;
+            text-align: center;
+            padding: 10px 0px 0px 0px;
+        }
+
+        #logoutbtn{
+            position: relative;
+            bottom: 0px;
+            left: 25px;
+        }
+
+        #identifyuser{
+            position: fixed;
+            bottom: 735px;
+            right: 0px;
+            left: 20px;
+        }
     </style>
 </head>
 <body>
-    <header id="header" style="background-color: rgb(168, 15, 15); margin:0px; padding: 30px;">
-        <h1 style="text-align: center; color:white">Welcome the the Revature Expense Reimbursement System!</h1>
+    <header style = "background-color: rgb(168, 15, 15); margin:0px; padding: 30px;">
+        <h3 style = "text-align: center; color:white">Daily Planet's Expense Reimbursement System</h3>
+        <div id = "header"></div>
     </header>
     <br>
-    <div class="container" id="fullcontainer">
-        <div class="row" id="login-row">
-            <h1 class="col-lg-12" id="entercredentials">Please Enter Your Username and Password:</h1>
-            <input class="col-sm-12 form-control" id="username" type="text" placeholder="USERNAME">
-            <input class="col-sm-12 form-control" id="password" type="password" placeholder="PASSWORD">
+    <div class = "container" id = "fullcontainer">
+        <div class = "row" id = "login-row">
+            <h4 class = "col-lg-12" id = "entercredentials">Please Enter Your Username and Password:</h4>
+            <input class = "col-sm-12 form-control" id = "username" type = "text" placeholder = "USERNAME">
+            <input class = "col-sm-12 form-control" id = "password" type = "password" placeholder = "PASSWORD">
             <br>
             <br>
-            <button id="loginbtn" class="btn btn-danger">Login</button>
+            <button id = "loginbtn" class = "btn btn-danger">Login</button>
         </div>
+        <div id = "user"></div>
+        <div class = "row" id = "data"></div>
     </div>
+    <script src = "ers.js"></script>
 </body>
 </html>

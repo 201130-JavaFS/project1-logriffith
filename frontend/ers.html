@@ -72,7 +72,51 @@
             <button id = "loginbtn" class = "btn btn-danger">Login</button>
         </div>
         <div id = "user"></div>
-        <div class = "row" id = "data"></div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class = "row" id = "newreimb-row">
+            <table class = "table table-hover table-bordered" id = "newreimbtable">
+                <thead>
+                    <tr>
+                        <th id = "reimbrequester">ID</th>
+                        <th id = "newamount">amount</th>
+                        <th id = "newdescription">description</th>
+                        <th id = "newtype">type</th>
+                    </tr>
+                </thead>
+                <tbody id="newreimb"></tbody>
+            </table>
+        </div>
+        <div class = "row" id = "pend-row">
+            <table class="table table-hover table-bordered" id="pendreimbtable">
+                <thead>
+                    <tr>
+                        <th id = "penduserid">ID</th>
+                        <th id = "pendamount">amount</th>
+                        <th id = "penddescription">description</th>
+                        <th id = "pendtype">type</th>
+                        <th id = "pendstatus">status</th>
+                    </tr>
+                </thead>
+                <tbody id="pendreimb"></tbody>
+            </table>
+        </div>
+        <div class = "row" id = "allreimb-row">
+            <table class="table table-hover table-bordered" id="allreimbtable">
+                <thead>
+                    <tr>
+                        <th id = "userid">ID</th>
+                        <th id = "amount">amount</th>
+                        <th id = "description">description</th>
+                        <th id = "type">type</th>
+                        <th id = "status">status</th>
+                    </tr>
+                </thead>
+                <tbody id="allreimb"></tbody>
+            </table>
+        </div>
     </div>
     <script src = "ers.js"></script>
 </body>

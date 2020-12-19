@@ -1,6 +1,9 @@
 const url = 'http://localhost:8080/project-1/';
 
 document.getElementById("loginbtn").addEventListener("click",login);
+//document.getElementById("logoutbtn").addEventListener("click",logout);
+
+let userRole = null;
 
 async function login(){
     console.log("In Login Function")
@@ -30,6 +33,7 @@ async function login(){
         //delete this later?
         console.log(loginResponse);
         console.log(user);
+        userRole = user.role;
 
         let logout = document.getElementById("header");
         let logoutButton = document.createElement("button");
@@ -45,72 +49,102 @@ async function login(){
 
         let adjustPadding = document.getElementById("login-row");
         adjustPadding.id = "data";
-        document.getElementById("identifyuser").innerText = user.role + ": " + user.firstName + " " + user.lastName;
+        document.getElementById("identifyuser").innerText = userRole + ": " + user.firstName + " " + user.lastName;
         console.log("Request Succeeded!")
-        //document.getElementById("logoutbtn").addEventListener("click",logout);
 
-        let data = document.getElementById("data");
+        //let data = document.getElementById("data");
+        let newReimb = document.getElementById("table1");
+        newReimb.className = "table table-hover table-bordered";
+        newReimb.id = "newreimbtable";
 
-        if (user.role === "Manager"){
-            console.log("in Manager Options");
-            let pendHeading = document.createElement("h4");
-            pendHeading.id = "pendhead";
-            pendHeading.className = "heading";
-            data.appendChild(pendHeading);
-            document.getElementById("pendhead"). innerText = "View Pending Reimbursement Requests:";
+        let pendReimb = document.getElementById("table2");
+        pendReimb.className = "table table-hover table-bordered";
+        pendReimb.id = "pendreimbtable";
+
+        let allReimb = document.getElementById("table3");
+        allReimb.className = "table table-hover table-bordered";
+        allReimb.id = "allreimbtable";
+
+        document.getElementById("newhead").innerText = "Request New Reimbursement:";
+        document.getElementById("newamount").innerText = "Amount";
+        document.getElementById("newdescription").innerText = "Description";
+        document.getElementById("newtype").innerText = "Type";
+
+        document.getElementById("pendhead").innerText = "Pending Reimbursement Requests:"
+        document.getElementById("penduserid").innerText = "EmployeeId";
+        document.getElementById("pendamount").innerText = "Amount";
+        document.getElementById("penddescription").innerText ="Description";
+        document.getElementById("pendtype").innerText = "Type";
+        document.getElementById("pendstatus").innerText = "Status";
+
+        document.getElementById("allhead").innerText = "All Reimbursements:";
+        document.getElementById("userid").innerText = "EmployeeId";
+        document.getElementById("amount").innerText = "Amount";
+        document.getElementById("description").innerText ="Description";
+        document.getElementById("type").innerText = "Type";
+        document.getElementById("status").innerText = "Status";
+
+            // let newRow = document.createElement("tr");
+            // let cell = document.createElement("td");
+            // let insertId = document.createElement("input");
+            // insertId.type = "text";
+            // insertId.id = "newreimbid";
+
+
+            // let pendHeading = document.createElement("h4");
+            // pendHeading.id = "pendhead";
+            // pendHeading.className = "heading";
+            // data.appendChild(pendHeading);
             
-            let requests = document.createElement("button");
-            requests.id = "pendingrequests";
-            requests.className = "btn btn-danger";
-            data.appendChild(requests);
-            document.getElementById("pendingrequests").innerText = "Pending Requests";
+            // let requests = document.createElement("button");
+            // requests.id = "pendingrequests";
+            // requests.className = "btn btn-danger";
+            // data.appendChild(requests);
+            // document.getElementById("pendingrequests").innerText = "Pending Requests";
 
-            let pendTable = document.createElement("table");
-            pendTable.className = "table table-hover table-bordered";
-            pendTable.id = "pendtable";
+            // let pendTable = document.createElement("table");
+            // pendTable.className = "table table-hover table-bordered";
+            // pendTable.id = "pendtable";
 
-            let pendLabel = document.createElement("thead");
-            pendLabel.id = "pendlabel";
+            // let pendLabel = document.createElement("thead");
+            // pendLabel.id = "pendlabel";
 
-            let pendRow0 = document.createElement("tr");
-            pendRow0.id = "pendrow0";
+            // let pendRow0 = document.createElement("tr");
+            // pendRow0.id = "pendrow0";
 
-            let label1 = document.createElement("th");
-            label1.id = "firstname";
-            pendRow0.appendChild(lable1);
-            document.getElementById("firstname").innerText = "First Name";
+            // let label1 = document.createElement("th");
+            // label1.id = "firstname";
+            // pendRow0.appendChild(lable1);
+            // document.getElementById("firstname").innerText = "First Name";
 
-            let label2 = document.createElement("th");
-            label2.id = "lastname";
-            pendRow0.appendChild(lable2);
-            document.getElementById("lastname").innerText = "Last Name";
+            // let label2 = document.createElement("th");
+            // label2.id = "lastname";
+            // pendRow0.appendChild(lable2);
+            // document.getElementById("lastname").innerText = "Last Name";
 
-            let label3 = document.createElement("th");
-            label3.className = "amount";
-            pendRow0.appendChild(label3);
-            document.getElementsByClassName("amount").innerText = "Amount";
+            // let label3 = document.createElement("th");
+            // label3.className = "amount";
+            // pendRow0.appendChild(label3);
+            // document.getElementsByClassName("amount").innerText = "Amount";
 
-            let label4 = document.createElement("th");
-            label4.className = "description";
-            pendRow0.appendChild(label4);
-            document.getElementsByClassName("description").innerText = "Description";
+            // let label4 = document.createElement("th");
+            // label4.className = "description";
+            // pendRow0.appendChild(label4);
+            // document.getElementsByClassName("description").innerText = "Description";
 
-            let label5 = document.createElement("th");
-            label5.className = "type";
-            pendRow0.appendChild(label5);
-            document.getElementsByClassName("type").innerText = "Type";
+            // let label5 = document.createElement("th");
+            // label5.className = "type";
+            // pendRow0.appendChild(label5);
+            // document.getElementsByClassName("type").innerText = "Type";
 
-            let label6 = document.createElement("th");
-            label6.id = "status";
-            pendRow0.appendChild(label6);
-            document.getElementsByClassName("status").innerText = "Status";
+            // let label6 = document.createElement("th");
+            // label6.id = "status";
+            // pendRow0.appendChild(label6);
+            // document.getElementsByClassName("status").innerText = "Status";
 
-            pendLabel.appendChild(pendRow0);
-            pendTable.appendChild(pendLabel);
-            data.appendChild(pendTable);
-
-
-        }
+            // pendLabel.appendChild(pendRow0);
+            // pendTable.appendChild(pendLabel);
+            // data.appendChild(pendTable);
     }else{
         console.log("Request Failed :(")
         let error = document.getElementById("login-row");

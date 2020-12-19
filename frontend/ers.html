@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang = "en">
+<html lang="en">
+
 <head>
-    <meta charset = "UTF-8">
-    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Reimbursement System</title>
-    <link rel = "stylesheet" href = "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity = "sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin = "anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
-       table {
+        table {
             text-align: center;
         }
 
@@ -17,38 +18,48 @@
             padding: 200px 0px;
         }
 
+        #table1,
+        #table2,
+        #table3{
+            border: none;
+        }
+
         body {
             background-color: rgb(54, 54, 228);
         }
 
-        #username,#password {
+        #username,
+        #password,
+        #newreimbtable,
+        #pendreimbtable,
+        #allreimbtable {
             background-color: rgb(235, 231, 231);
             margin: auto;
         }
 
-        #entercredentials{
+        #enter {
             font-size: 22px;
             text-align: center;
         }
 
-        #loginbtn{
+        #loginbtn {
             margin: auto;
             width: 40%;
         }
 
-        #message{
+        #message {
             margin: auto;
             text-align: center;
             padding: 10px 0px 0px 0px;
         }
 
-        #logoutbtn{
+        #logoutbtn {
             position: relative;
             bottom: 0px;
             left: 25px;
         }
 
-        #identifyuser{
+        #identifyuser {
             position: fixed;
             bottom: 735px;
             right: 0px;
@@ -56,68 +67,80 @@
         }
     </style>
 </head>
+
 <body>
-    <header style = "background-color: rgb(168, 15, 15); margin:0px; padding: 30px;">
-        <h3 style = "text-align: center; color:white">Daily Planet's Expense Reimbursement System</h3>
-        <div id = "header"></div>
+    <header style="background-color: rgb(168, 15, 15); margin:0px; padding: 30px;">
+        <h3 style="text-align: center; color:white">Daily Planet's Expense Reimbursement System</h3>
+        <div id="header"></div>
     </header>
     <br>
-    <div class = "container" id = "fullcontainer">
-        <div class = "row" id = "login-row">
-            <h4 class = "col-lg-12" id = "entercredentials">Please Enter Your Username and Password:</h4>
-            <input class = "col-sm-12 form-control" id = "username" type = "text" placeholder = "USERNAME">
-            <input class = "col-sm-12 form-control" id = "password" type = "password" placeholder = "PASSWORD">
+    <div class="container" id="fullcontainer">
+        <div class="row" id="login-row">
+            <h4 class="col-lg-12" id="enter">Please Enter Your Username and Password:</h4>
+            <input class="col-sm-12 form-control" id="username" type="text" placeholder="USERNAME">
+            <input class="col-sm-12 form-control" id="password" type="password" placeholder="PASSWORD">
             <br>
             <br>
-            <button id = "loginbtn" class = "btn btn-danger">Login</button>
+            <button id="loginbtn" class="btn btn-danger">Login</button>
         </div>
-        <div id = "user"></div>
+        <div id="user"></div>
         <br>
         <br>
         <br>
         <br>
-        <div class = "row" id = "newreimb-row">
-            <table class = "table table-hover table-bordered" id = "newreimbtable">
+        <div class="row" id="newreimb-row">
+            <h4 class="col-lg-12" id="newhead"></h4>
+            <table id="table1">
                 <thead>
                     <tr>
-                        <th id = "reimbrequester">ID</th>
-                        <th id = "newamount">amount</th>
-                        <th id = "newdescription">description</th>
-                        <th id = "newtype">type</th>
+                        <th id="newamount"></th>
+                        <th id="newdescription"></th>
+                        <th id="newtype"></th>
                     </tr>
                 </thead>
                 <tbody id="newreimb"></tbody>
             </table>
+            <div id = "sendreimb"></div>
         </div>
-        <div class = "row" id = "pend-row">
-            <table class="table table-hover table-bordered" id="pendreimbtable">
+        <br>
+        <br>
+        <div class="row" id="pend-row">
+            <h4 class="col-lg-12" id="pendhead"></h4>
+            <div id="getpending"></div>
+            <table  id="table2">
                 <thead>
                     <tr>
-                        <th id = "penduserid">ID</th>
-                        <th id = "pendamount">amount</th>
-                        <th id = "penddescription">description</th>
-                        <th id = "pendtype">type</th>
-                        <th id = "pendstatus">status</th>
+                        <th id="penduserid"></th>
+                        <th id="pendamount"></th>
+                        <th id="penddescription"></th>
+                        <th id="pendtype"></th>
+                        <th id="pendstatus"></th>
                     </tr>
                 </thead>
                 <tbody id="pendreimb"></tbody>
             </table>
+            <div id = "updatepend"></div>
         </div>
-        <div class = "row" id = "allreimb-row">
-            <table class="table table-hover table-bordered" id="allreimbtable">
+        <br>
+        <br>
+        <div class="row" id="allreimb-row">
+            <h4 class="col-lg-12" id="allhead"></h4>
+            <table id="table3">
                 <thead>
                     <tr>
-                        <th id = "userid">ID</th>
-                        <th id = "amount">amount</th>
-                        <th id = "description">description</th>
-                        <th id = "type">type</th>
-                        <th id = "status">status</th>
+                        <th id="userid"></th>
+                        <th id="amount"></th>
+                        <th id="description"></th>
+                        <th id="type"></th>
+                        <th id="status"></th>
                     </tr>
                 </thead>
                 <tbody id="allreimb"></tbody>
             </table>
+            <div id = "getall"></div>
         </div>
     </div>
-    <script src = "ers.js"></script>
+    <script src="ers.js"></script>
 </body>
+
 </html>

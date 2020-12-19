@@ -40,7 +40,7 @@ async function login(){
         logoutButton.className = "btn btn-primary";
         logout.appendChild(logoutButton);
         document.getElementById("logoutbtn").innerText = "Log Out";
-        //document.getElementById("logoutbtn").addEventListener("click",logout);
+        document.getElementById("logoutbtn").addEventListener("click",logoutFunc);
 
         let name = document.getElementById("user");
         let identifier = document.createElement("h5");
@@ -155,8 +155,8 @@ async function login(){
     }
 };
 
-async function logout(){
-    let logoutResponse = await fetch(url,{credentials:"include"});
+async function logoutFunc(){
+    let logoutResponse = await fetch(url + "",{credentials:"include"});
     if(logoutResponse.status === 200){
         console.log("Logged Out Successfully");
     }else{

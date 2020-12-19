@@ -5,7 +5,7 @@ INSERT INTO reimbursement_type (reimb_type)
 VALUES ('LODGING'),('FOOD'),('OTHER'),('TRAVEL'),('OTHER'),('FOOD');
 
 INSERT INTO user_roles (us_role)
-VALUES ('employee'),('employee'),('manager'),('manager'),('employee'),('manager');
+VALUES ('Employee'),('Employee'),('Manager'),('Manager'),('Employee'),('Manager');
 
 INSERT INTO users (username, us_password, first_name, last_name, email, role_id)
 VALUES
@@ -29,11 +29,11 @@ VALUES
 
 INSERT INTO reimbursements (amount, submitted, resolved, description, user_id, status_id, type_id)
 VALUES (250.25, '2020-12-12 20:25:11', '2020-12-12 20:35:11', 'hotel expenses for story in Gotham', 1, 1 , 1),
-(402.50, '2020-12-12 20:30:11', '2020-12-12 20:40:11', 'food for Bobby Bigmouth', 2, 2, 2),
+(402.50, '2020-12-12 20:30:11', null, 'food for Bobby Bigmouth', 2, 2, 2),
 (1000.99, '2020-12-12 20:40:11', '2020-12-12 20:50:11', 'Elvis Museum Gift Shop', 3, 3, 3),
-(1155.99, '2020-12-12 21:50:11', '2020-12-12 21:00:11', 'I am a manager', 4, 4, 4),
-(122.95, '2020-12-12 21:05:11', '2020-12-12 21:10:11', 'I have my reasons', 5, 5, 5),
-(259.45, '2020-12-12 21:15:11', '2020-12-12 21:45:11', 'I was hungry, dont judge me', 6, 6, 6);
+(1155.99, '2020-12-12 21:50:11', null, 'I am a manager', 4, 4, 4),
+(122.95, '2020-12-12 21:05:11', null, 'I have my reasons', 5, 5, 5),
+(259.45, '2020-12-12 21:15:11', null, 'I was hungry, dont judge me', 6, 6, 6);
 
 SELECT max(status_id) FROM reimbursement_status;
 

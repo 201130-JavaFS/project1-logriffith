@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
-import org.apache.log4j.Logger;
-
+import com.ers.models.Reimbursement;
 import com.ers.models.User;
 import com.ers.utils.DbConnection;
 import com.ers.utils.ReimbQueries;
@@ -39,5 +39,52 @@ public class UserDAOImpl implements UserDAO {
 	
 		return user;
 	}
+
+	@Override
+	public boolean newStatus(String status) {
+		boolean statusAdded = false;
+		try(Connection connection = DbConnection.getConnection()){
+			String sql = ReimbQueries.NEW_REIMB_STATUS;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, status);
+			preparedStatement.executeUpdate();
+			statusAdded = true;
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		return statusAdded;
+	}
+
+	@Override
+	public boolean newType(String type) {
+		boolean typeAdded = false;
+		try(Connection connection = DbConnection.getConnection()){
+			String sql = ReimbQueries.NEW_REIMB_TYPE;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, type);
+			preparedStatement.executeUpdate();
+			typeAdded = true;
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		return typeAdded;
+	}
+
+	@Override
+	public boolean newReimbursement(Reimbursement reimbursement) {
+		boolean reimbAdded = false;
+		try(Connection connection = DbConnection.getConnection()){
+			String sql = ReimbQueries.NEW_REIMBURSEMENT;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setDouble(1, reimbursement.getAmount());
+			preparedStatement.setTimestamp(2, new java.sql.Timestamp(reimbursement.getSubmitted().getTime()));
+			preparedStatement.setNull(3, Types.TIMESTAMP_WITH_TIMEZONE);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		return reimbAdded;
+	}
+
+	
 
 }

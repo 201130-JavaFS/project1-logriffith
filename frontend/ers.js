@@ -22,7 +22,7 @@ async function login(){
         //will also require this value in order to sent the cookie back.
     });
 
-    if(loginResponse.status == 200){
+    if(loginResponse.status === 200){
         console.log("In if-statement");
         let user = await loginResponse.json();//get json response and store in JS object
         document.getElementById("login-row").innerHTML = "";//puts no content into this element
@@ -48,6 +48,16 @@ async function login(){
         document.getElementById("identifyuser").innerText = user.role + ": " + user.firstName + " " + user.lastName;
         console.log("Request Succeeded!")
         //document.getElementById("logoutbtn").addEventListener("click",logout);
+
+        let data = document.getElementById("data");
+        
+        if (user.name === "Manager"){
+            let pendingHeading = document.createElement("h4");
+            pendingHeading.id = "pendhead";
+            pendingHeading.className = "heading";
+            data.appendChild(pendingHeading);
+
+        }
     }else{
         console.log("Request Failed :(")
         let error = document.getElementById("login-row");

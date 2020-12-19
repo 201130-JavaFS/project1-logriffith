@@ -1,9 +1,6 @@
 const url = 'http://localhost:8080/project-1/';
 
 document.getElementById("loginbtn").addEventListener("click",login);
-//document.getElementById("logoutbtn").addEventListener("click",logout);
-
-let userRole = null;
 
 async function login(){
     console.log("In Login Function")
@@ -25,6 +22,8 @@ async function login(){
         //will also require this value in order to sent the cookie back.
     });
 
+    console.log(loginResponse);
+
     if(loginResponse.status === 200){
         console.log("In if-statement");
         let user = await loginResponse.json();//get json response and store in JS object
@@ -33,7 +32,7 @@ async function login(){
         //delete this later?
         console.log(loginResponse);
         console.log(user);
-        userRole = user.role;
+       // userRole = user.role;
 
         let logout = document.getElementById("header");
         let logoutButton = document.createElement("button");
@@ -41,6 +40,7 @@ async function login(){
         logoutButton.className = "btn btn-primary";
         logout.appendChild(logoutButton);
         document.getElementById("logoutbtn").innerText = "Log Out";
+        //document.getElementById("logoutbtn").addEventListener("click",logout);
 
         let name = document.getElementById("user");
         let identifier = document.createElement("h5");
@@ -49,7 +49,7 @@ async function login(){
 
         let adjustPadding = document.getElementById("login-row");
         adjustPadding.id = "data";
-        document.getElementById("identifyuser").innerText = userRole + ": " + user.firstName + " " + user.lastName;
+        document.getElementById("identifyuser").innerText = user.role + ": " + user.firstName + " " + user.lastName;
         console.log("Request Succeeded!")
 
         //let data = document.getElementById("data");
@@ -155,6 +155,11 @@ async function login(){
     }
 };
 
-//async function logout(){
-
-//};
+async function logout(){
+    let logoutResponse = await fetch(url,{credentials:"include"});
+    if(logoutResponse.status === 200){
+        console.log("Logged Out Successfully");
+    }else{
+        console.log("Logout Failed")
+    }
+};

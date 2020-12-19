@@ -9,26 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ers.controllers.LoginController;
 
-public class PrimaryServlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
 	
-	private LoginController loginController = new LoginController();
+private LoginController loginController = new LoginController();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		response.setContentType("application/json");
 		response.setStatus(404);//change status code later if something is found
 		final String URI = request.getRequestURI().replace("/project-1/", "");//removes all the base info
-		switch(URI) {
-			case "login":
-				loginController.login(request,response);
-				break;
-//			case "":
-//				loginController.logout(request,response);
+		if(URI.equals("")) {
+			loginController.logout(request, response);
 		}
-	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		response.setContentType("application/json");
-		doGet(request,response);
 	}
 	
 }

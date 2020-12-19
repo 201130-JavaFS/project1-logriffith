@@ -56,4 +56,14 @@ public class LoginController {
 		
 	}
 	
+	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession session = request.getSession(false); //if a session doesn't already exists, it returns null
+		if(session != null) {
+			session.invalidate(); //deletes the session/logs them out
+			response.setStatus(200);
+			response.getWriter().print("Logged Out");
+		}
+		
+	}
+	
 }

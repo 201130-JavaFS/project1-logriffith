@@ -36,9 +36,21 @@ public class UserService {
 		}
 	}
 	
-	public boolean approveReimb(int statusId, String newStatus) {
-		if(statusId > 0 && newStatus.length() > 0) {
-			
+	public String getStatus(int statusId) {
+		if (statusId > 0) {
+			return userDAO.getStatus(statusId);
 		}
+		return null;
+	}
+	
+	public boolean changeStatus(int statusId, String newStatus) {
+		if(statusId > 0 && newStatus.length() > 0) {
+			newStatus = newStatus.trim().toLowerCase();
+			if(newStatus.equals("approved") || newStatus.equals("denied")) {
+				userDAO.updateStatus(statusId, newStatus);
+				return true;
+			}
+		}
+		return false;
 	}
 }

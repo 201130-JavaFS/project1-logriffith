@@ -117,23 +117,35 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<Reimbursement> allPendingById(int userId) {
-		
+		try(Connection connection = DbConnection.getConnection()){
+			String sql = ReimbQueries.GET_ALL_PENDIN_BY_ID;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, userId);
+			List<Reimbursement> rlist = new ArrayList<>();
+			ResultSet resultSet = preparedStatement.executeQuery(sql);
+			while(resultSet.next()) {
+				Reimbursement reimb = new Reimbursement();
+				reimb.setUserId(resultSet.getInt("user_id"));
+				reimb.setAmount(resultSet.getDouble("amount"));
+				reimb.setDescription(resultSet.getString("description"));
+				reimb.setTypeId(resultSet.getInt("type_id"));
+				reimb.setSubmitted(resultSet.getTimestamp("submitted"));
+				rlist.add(reimb);
+			}
+			return rlist;
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public List<Reimbursement> allReimb() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Reimbursement> allReimById(int userId) {
 		try(Connection connection = DbConnection.getConnection()){
-			String sql = ReimbQueries.GET_REIMB_BY_ID;
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, userId);
-			ResultSet result = preparedStatement.executeQuery();
+			String sql = ReimbQueries.GET_ALL_REIMB_BY_ID;
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery(sql);
+			List<Reimbursement> rlist = new ArrayList<>();
 			while(result.next()) {
 				Reimbursement reimb = new Reimbursement(
 						result.getDouble("amount"),
@@ -143,15 +155,54 @@ public class UserDAOImpl implements UserDAO {
 						result.getInt("user_id"),
 						result.getInt("status_id"),
 						result.getInt("type_id"));
+				rlist.add(reimb);
 			}
+			return rlist;
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-		}		return null;
+		}
+		return null;
+	}
+
+	@Override
+	public List<Reimbursement> allReimById(int userId) {
+		try(Connection connection = DbConnection.getConnection()){
+			String sql = ReimbQueries.GET_ALL_REIMB_BY_ID;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, userId);
+			ResultSet result = preparedStatement.executeQuery();
+			List<Reimbursement> rlist = new ArrayList<>();
+			while(result.next()) {
+				Reimbursement reimb = new Reimbursement(
+						result.getDouble("amount"),
+						result.getTimestamp("submitted"),
+						result.getTimestamp("resolved"),
+						result.getString("description"),
+						result.getInt("user_id"),
+						result.getInt("status_id"),
+						result.getInt("type_id"));
+				rlist.add(reimb);
+			}
+			return rlist;
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
 	public String getType(int typeId) {
-		// TODO Auto-generated method stub
+		try(Connection connection = DbConnection.getConnection()){
+			String sql = ReimbQueries.GET_TYPE; 
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, typeId);
+			ResultSet result = preparedStatement.executeQuery();
+			if(result.next()) {
+				return result.getString("reimb_type");
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

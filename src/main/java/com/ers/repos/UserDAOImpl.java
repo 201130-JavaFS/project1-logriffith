@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.List;
 
 import com.ers.models.Reimbursement;
 import com.ers.models.User;
@@ -87,6 +88,42 @@ public class UserDAOImpl implements UserDAO {
 			e.printStackTrace();
 		}
 		return reimbAdded;
+	}
+
+	@Override
+	public List<Reimbursement> allPending() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Reimbursement> allPendingById(int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Reimbursement> allReimb() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Reimbursement> allReimById(int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getType(int typeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getStatus(int statusId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

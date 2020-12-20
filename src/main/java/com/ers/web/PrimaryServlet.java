@@ -21,8 +21,8 @@ public class PrimaryServlet extends HttpServlet {
 			case "login":
 				loginController.login(request,response);
 				break;
-//			case "":
-//				loginController.logout(request,response);
+			case "logout":
+				loginController.logout(request,response);
 		}
 	}
 	

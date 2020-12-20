@@ -13,7 +13,6 @@ async function login(){
         password : inputtedPassword
     };
 
-    console.log(userInfo);
     let loginResponse = await fetch(url + "login", {
         method : "POST",
         body : JSON.stringify(userInfo),//adds the credentials to the request body
@@ -29,10 +28,7 @@ async function login(){
         let user = await loginResponse.json();//get json response and store in JS object
         document.getElementById("login-row").innerHTML = "";//puts no content into this element
 
-        //delete this later?
-        console.log(loginResponse);
         console.log(user);
-       // userRole = user.role;
 
         let logout = document.getElementById("header");
         let logoutButton = document.createElement("button");
@@ -159,7 +155,7 @@ async function login(){
 };
 
 async function logoutFunc(){
-    let logoutResponse = await fetch(url + "",{credentials:"include"});
+    let logoutResponse = await fetch(url + "logout",{credentials:"include"});
     if(logoutResponse.status === 200){
         console.log("Logged Out Successfully");
     }else{

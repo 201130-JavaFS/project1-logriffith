@@ -18,6 +18,9 @@ public class ConfirmLogin {
 			if (username.equals(storedUsername) && password.equals(Encryption.decrypt(storedPassword))) {
 				//log.info("Login successful for user: " + username);
 				user = userDAO.getUser(username, Encryption.encrypt(password));
+				user.setPassword(null);
+				user.setUsername(null);
+				user.setEmail(null);
 			}
 
 		}

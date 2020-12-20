@@ -5,7 +5,7 @@ import com.ers.repos.UserDAO;
 import com.ers.repos.UserDAOImpl;
 import com.ers.utils.Encryption;
 
-public class ConfirmLogin {
+public class UserService {
 
 	//public static Logger log = Logger.getLogger(LoginService.class);
 	private UserDAO userDAO = new UserDAOImpl();
@@ -18,12 +18,27 @@ public class ConfirmLogin {
 			if (username.equals(storedUsername) && password.equals(Encryption.decrypt(storedPassword))) {
 				//log.info("Login successful for user: " + username);
 				user = userDAO.getUser(username, Encryption.encrypt(password));
-				user.setPassword(null);
+				user.setPassword(null);//probably shouldn't send this information back in the response
 				user.setUsername(null);
 				user.setEmail(null);
 			}
 
 		}
 		return user;
+	}
+	
+	public String getType(int typeId) {
+		if(typeId > 0) {
+			String type = userDAO.getType(typeId);
+			return type;
+		}else {
+			return null;
+		}
+	}
+	
+	public boolean approveReimb(int statusId, String newStatus) {
+		if(statusId > 0 && newStatus.length() > 0) {
+			
+		}
 	}
 }

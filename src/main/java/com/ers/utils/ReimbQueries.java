@@ -17,7 +17,7 @@ public class ReimbQueries {
 			+ "INNER JOIN reimbursement_status ON reimbursements.status_id = reimbursement_status.status_id "
 			+ "WHERE status IS NULL";
 	
-	public static final String GET_ALL_PENDIN_BY_ID = "SELECT user_id,amount,description,type_id,submitted FROM reimbursements "
+	public static final String GET_ALL_PENDING_BY_ID = "SELECT user_id,amount,description,type_id,submitted FROM reimbursements "
 			+ "INNER JOIN reimbursement_status ON reimbursements.status_id = reimbursement_status.status_id "
 			+ "WHERE status IS NULL AND user_id = 2";
 	
@@ -29,4 +29,6 @@ public class ReimbQueries {
 	public static final String GET_TYPE = "SELECT reimb_type FROM reimbursement_type WHERE type_id = ?";
 	
 	public static final String GET_STATUS = "SELECT status FROM reimbursement_status WHERE status_id = ?";
+	
+	public static final String UPDATE_STATUS = "UPDATE reimbursement_status SET status = ? WHERE status_id = ?";
 }

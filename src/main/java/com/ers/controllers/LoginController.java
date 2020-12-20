@@ -9,13 +9,13 @@ import javax.servlet.http.HttpSession;
 
 import com.ers.models.LoginDTO;
 import com.ers.models.User;
-import com.ers.services.ConfirmLogin;
+import com.ers.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class LoginController {
 	
 	private ObjectMapper objectMapper = new ObjectMapper();
-	private ConfirmLogin confirmLogin = new ConfirmLogin();
+	private UserService userService = new UserService();
 	
 	public void login(HttpServletRequest request, HttpServletResponse response) throws IOException{
 	
@@ -30,10 +30,10 @@ public class LoginController {
 			
 			String body = new String(stringBuilder);//puts the body in String object
 			LoginDTO loginDTO = objectMapper.readValue(body, LoginDTO.class); //takes the JSON data as a string and stores it as a LoginDTO object
-			if(confirmLogin.login(loginDTO.username, loginDTO.password) != null) {
+			if(userService.login(loginDTO.username, loginDTO.password) != null) {
 				HttpSession httpSession = request.getSession();//returns the current session or creates one if it doesn't exist
 
-				User user = confirmLogin.login(loginDTO.username, loginDTO.password);
+				User user = userService.login(loginDTO.username, loginDTO.password);
 				//user.setPassword(null);
 				String json = objectMapper.writeValueAsString(user);//converts the user into a JSON String 
 				response.getWriter().print(json);

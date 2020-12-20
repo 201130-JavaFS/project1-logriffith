@@ -90,7 +90,7 @@ public class ReimbDAOImpl implements ReimbDAO {
 	@Override
 	public List<Reimbursement> allPendingById(int userId) {
 		try(Connection connection = DbConnection.getConnection()){
-			String sql = ReimbQueries.GET_ALL_PENDIN_BY_ID;
+			String sql = ReimbQueries.GET_ALL_PENDING_BY_ID;
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, userId);
 			List<Reimbursement> rlist = new ArrayList<>();

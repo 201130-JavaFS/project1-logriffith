@@ -57,8 +57,7 @@ public class ReimbDAOImpl implements ReimbDAO {
 			preparedStatement.setInt(3, reimbursement.getUserId());
 			preparedStatement.executeUpdate();
 			reimbAdded = true;
-			// Chris said that this would work too: preparedStatement.setTimestamp(3,
-			// Timestamp.valueOf(LocalDateTime.now()))
+			// Chris said that this would work too: preparedStatement.setTimestamp(3,Timestamp.valueOf(LocalDateTime.now()))
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -124,15 +123,23 @@ public class ReimbDAOImpl implements ReimbDAO {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a z");
 			while (result.next()) {
 				if (result.getTimestamp("resolved") != null) {
-					Reimbursement reimb = new Reimbursement(result.getDouble("amount"),
+					Reimbursement reimb = new Reimbursement(
+							result.getDouble("amount"),
 							simpleDateFormat.format(result.getTimestamp("submitted")),
-							simpleDateFormat.format(result.getTimestamp("resolved")), result.getString("description"),
-							result.getInt("user_id"), result.getInt("status_id"), result.getInt("type_id"));
+							simpleDateFormat.format(result.getTimestamp("resolved")),
+							result.getString("description"),
+							result.getInt("user_id"),
+							result.getInt("status_id"),
+							result.getInt("type_id"));
 					rlist.add(reimb);
 				} else {
-					Reimbursement reimb = new Reimbursement(result.getDouble("amount"),
-							simpleDateFormat.format(result.getTimestamp("submitted")), "not resolved",
-							result.getString("description"), result.getInt("user_id"), result.getInt("status_id"),
+					Reimbursement reimb = new Reimbursement(
+							result.getDouble("amount"),
+							simpleDateFormat.format(result.getTimestamp("submitted")),
+							"not resolved",
+							result.getString("description"),
+							result.getInt("user_id"),
+							result.getInt("status_id"),
 							result.getInt("type_id"));
 					rlist.add(reimb);
 				}
@@ -155,11 +162,23 @@ public class ReimbDAOImpl implements ReimbDAO {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a z");
 			while (result.next()) {
 				if (result.getTimestamp("resolved") != null) {
-					Reimbursement reimb = new Reimbursement(result.getDouble("amount"),
+					Reimbursement reimb = new Reimbursement(
+							result.getDouble("amount"),
 							simpleDateFormat.format(result.getTimestamp("submitted")),
 							simpleDateFormat.format(result.getTimestamp("resolved")),
 							result.getString("description"),
-							result.getInt("user_id"), result.getInt("status_id"),
+							result.getInt("user_id"),
+							result.getInt("status_id"),
+							result.getInt("type_id"));
+					rlist.add(reimb);
+				}else {
+					Reimbursement reimb = new Reimbursement(
+							result.getDouble("amount"),
+							simpleDateFormat.format(result.getTimestamp("submitted")),
+							"not resolved",
+							result.getString("description"),
+							result.getInt("user_id"),
+							result.getInt("status_id"),
 							result.getInt("type_id"));
 					rlist.add(reimb);
 				}

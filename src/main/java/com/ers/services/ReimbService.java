@@ -1,6 +1,5 @@
 package com.ers.services;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.ers.models.Reimbursement;
@@ -39,12 +38,7 @@ public class ReimbService {
 	}
 	
 	public List<Reimbursement> allPending(){
-		List<Reimbursement> reimbList = reimbDao.allPending();
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a z");
-		for(Reimbursement r : reimbList) {
-			r.setSubmitted(simpleDateFormat.format(r.getSubmitted()));
-		}
-		
+		return reimbDao.allPending();
 	}
 
 }

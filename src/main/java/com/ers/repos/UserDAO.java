@@ -1,8 +1,5 @@
 package com.ers.repos;
 
-import java.util.List;
-
-import com.ers.models.Reimbursement;
 import com.ers.models.User;
 
 public interface UserDAO {
@@ -11,5 +8,6 @@ public interface UserDAO {
 	public String getType(int typeId);
 	public String getStatus(int statusId);
 	public boolean updateStatus(int statusId, String newStatus);
+	public boolean updateResolvedTime(int statusId);
 }
 

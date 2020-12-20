@@ -30,5 +30,7 @@ public class ReimbQueries {
 	
 	public static final String GET_STATUS = "SELECT status FROM reimbursement_status WHERE status_id = ?";
 	
-	public static final String UPDATE_STATUS = "UPDATE reimbursement_status SET status = ? WHERE status_id = ?";
+	public static final String UPDATE_REIMB_STATUS = "UPDATE reimbursement_status SET status = ? WHERE status_id = ?";
+	
+	public static final String UPDATE_RESOLVED_DATE = "UPDATE reimbursements SET resolved = (SELECT now()) WHERE status_id = ?";
 }

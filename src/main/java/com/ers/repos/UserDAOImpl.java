@@ -9,6 +9,8 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 import com.ers.models.Reimbursement;
 import com.ers.models.User;
 import com.ers.utils.DbConnection;
@@ -78,12 +80,25 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public boolean updateStatus(int statusId, String newStatus) {
 		try(Connection connection = DbConnection.getConnection()){
-			String sql = ReimbQueries.UPDATE_STATUS;
+			String sql = ReimbQueries.UPDATE_REIMB_STATUS;
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, newStatus);
 			preparedStatement.setInt(2, statusId);
-			ResultSet resultSet = preparedStatement.executeQuery();
+			preparedStatement.executeQuery();
 			return true;
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateResolvedTime(int statusId) {
+		try(Connection connection = DbConnection.getConnection()){
+			String sql = ReimbQueries.UPDATE_RESOLVED_DATE;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, statusId);
+			preparedStatement.executeQuery();
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

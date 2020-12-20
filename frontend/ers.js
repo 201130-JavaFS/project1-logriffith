@@ -75,7 +75,7 @@ async function login(){
         document.getElementById("pendamount").innerText = "Amount";
         document.getElementById("penddescription").innerText ="Description";
         document.getElementById("pendtype").innerText = "Type";
-        document.getElementById("pendstatus").innerText = "Status";
+        document.getElementById("pendsubmit").innerText = "Submitted On";
 
         document.getElementById("allhead").innerText = "All Reimbursements:";
         document.getElementById("userid").innerText = "EmployeeId";
@@ -83,6 +83,9 @@ async function login(){
         document.getElementById("description").innerText ="Description";
         document.getElementById("type").innerText = "Type";
         document.getElementById("status").innerText = "Status";
+        document.getElementById("submitted").innerText = "Submitted On";
+        document.getElementById("resolved").innerText = "Resolved On";
+
 
             // let newRow = document.createElement("tr");
             // let cell = document.createElement("td");

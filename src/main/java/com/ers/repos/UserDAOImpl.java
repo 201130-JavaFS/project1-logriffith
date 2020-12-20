@@ -71,7 +71,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean newReimbursement(Reimbursement reimbursement) {
+	public boolean newReimburse(Reimbursement reimbursement) {
 		boolean reimbAdded = false;
 		try(Connection connection = DbConnection.getConnection()){
 			String sql = ReimbQueries.NEW_REIMBURSEMENT;
@@ -79,6 +79,10 @@ public class UserDAOImpl implements UserDAO {
 			preparedStatement.setDouble(1, reimbursement.getAmount());
 			preparedStatement.setTimestamp(2, new java.sql.Timestamp(reimbursement.getSubmitted().getTime()));
 			preparedStatement.setNull(3, Types.TIMESTAMP_WITH_TIMEZONE);
+			preparedStatement.setString(4, reimbursement.getDescription());
+			preparedStatement.setInt(5, reimbursement.getUserId());
+			preparedStatement.executeUpdate();
+			reimbAdded = true;
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

@@ -8,7 +8,8 @@ public interface UserDAO {
 	public User getUser(String username, String password);
 	public boolean newStatus(String status);
 	public boolean newType(String type);
-	public boolean newReimbursement(Reimbursement reimbursement);
-	
+	public boolean newReimburse(Reimbursement reimbursement);
+	public List<Reimbursement> allPending();
+	public List<Reimbursement> allPendingById(int userId);
 }
 

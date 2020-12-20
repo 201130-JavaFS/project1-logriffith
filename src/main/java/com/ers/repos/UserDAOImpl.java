@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ers.models.Reimbursement;
@@ -72,7 +74,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean newReimburse(Reimbursement reimbursement) {
+	public boolean newReimb(Reimbursement reimbursement) {
 		boolean reimbAdded = false;
 		try(Connection connection = DbConnection.getConnection()){
 			String sql = ReimbQueries.NEW_REIMBURSEMENT;
@@ -92,13 +94,30 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<Reimbursement> allPending() {
-		// TODO Auto-generated method stub
+		try(Connection connection = DbConnection.getConnection()){
+			String sql = ReimbQueries.GET_ALL_PENDING;
+			Statement statement = connection.createStatement();
+			List<Reimbursement> rlist = new ArrayList<>();
+			ResultSet resultSet = statement.executeQuery(sql);
+			while(resultSet.next()) {
+				Reimbursement reimb = new Reimbursement();
+				reimb.setUserId(resultSet.getInt("user_id"));
+				reimb.setAmount(resultSet.getDouble("amount"));
+				reimb.setDescription(resultSet.getString("description"));
+				reimb.setTypeId(resultSet.getInt("type_id"));
+				reimb.setSubmitted(resultSet.getTimestamp("submitted"));
+				rlist.add(reimb);
+			}
+			return rlist;
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public List<Reimbursement> allPendingById(int userId) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -110,8 +129,24 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<Reimbursement> allReimById(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+		try(Connection connection = DbConnection.getConnection()){
+			String sql = ReimbQueries.GET_REIMB_BY_ID;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, userId);
+			ResultSet result = preparedStatement.executeQuery();
+			while(result.next()) {
+				Reimbursement reimb = new Reimbursement(
+						result.getDouble("amount"),
+						result.getTimestamp("submitted"),
+						result.getTimestamp("resolved"),
+						result.getString("description"),
+						result.getInt("user_id"),
+						result.getInt("status_id"),
+						result.getInt("type_id"));
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}		return null;
 	}
 
 	@Override

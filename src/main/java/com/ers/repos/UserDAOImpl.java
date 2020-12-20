@@ -84,7 +84,7 @@ public class UserDAOImpl implements UserDAO {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, newStatus);
 			preparedStatement.setInt(2, statusId);
-			preparedStatement.executeQuery();
+			preparedStatement.executeUpdate();
 			return true;
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
@@ -98,7 +98,8 @@ public class UserDAOImpl implements UserDAO {
 			String sql = ReimbQueries.UPDATE_RESOLVED_DATE;
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, statusId);
-			preparedStatement.executeQuery();
+			preparedStatement.executeUpdate();
+			return true;
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

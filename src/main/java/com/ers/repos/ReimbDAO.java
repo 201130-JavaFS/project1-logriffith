@@ -6,7 +6,7 @@ import com.ers.models.Reimbursement;
 
 public interface ReimbDAO {
 
-	public boolean newStatus(String status);
+	public boolean newStatus();
 	public boolean newType(String type);
 	public boolean newReimb(Reimbursement reimbursement);
 	public List<Reimbursement> allPending();

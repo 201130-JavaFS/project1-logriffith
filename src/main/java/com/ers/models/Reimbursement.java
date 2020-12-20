@@ -6,8 +6,8 @@ public class Reimbursement {
 	
 	private int reimbId;
 	private double amount;
-	private Date submitted;
-	private Date resolved;
+	private String submitted;
+	private String resolved;
 	private String description;
 	private int userId;
 	private int statusId;
@@ -17,7 +17,7 @@ public class Reimbursement {
 		super();
 	}
 
-	public Reimbursement(int reimbId, double amount, Date submitted, Date resolved, String description, int userId,
+	public Reimbursement(int reimbId, double amount, String submitted, String resolved, String description, int userId,
 			int statusId, int typeId) {
 		super();
 		this.reimbId = reimbId;
@@ -30,7 +30,7 @@ public class Reimbursement {
 		this.typeId = typeId;
 	}
 
-	public Reimbursement(double amount, Date submitted, Date resolved, String description, int userId, int statusId,
+	public Reimbursement(double amount, String submitted, String resolved, String description, int userId, int statusId,
 			int typeId) {
 		super();
 		this.amount = amount;
@@ -58,19 +58,19 @@ public class Reimbursement {
 		this.amount = amount;
 	}
 
-	public Date getSubmitted() {
+	public String getSubmitted() {
 		return submitted;
 	}
 
-	public void setSubmitted(Date submitted) {
+	public void setSubmitted(String submitted) {
 		this.submitted = submitted;
 	}
 
-	public Date getResolved() {
+	public String getResolved() {
 		return resolved;
 	}
 
-	public void setResolved(Date resolved) {
+	public void setResolved(String resolved) {
 		this.resolved = resolved;
 	}
 
@@ -166,6 +166,5 @@ public class Reimbursement {
 				+ resolved + ", description=" + description + ", userId=" + userId + ", statusId=" + statusId
 				+ ", typeId=" + typeId + "]";
 	}
-	
 	
 }

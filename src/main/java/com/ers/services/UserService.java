@@ -53,4 +53,11 @@ public class UserService {
 		}
 		return false;
 	}
+	
+	public boolean timeResolved(int statusId) {
+		if(statusId > 0) {
+			return userDAO.updateResolvedTime(statusId);
+		}
+		return false;
+	}
 }

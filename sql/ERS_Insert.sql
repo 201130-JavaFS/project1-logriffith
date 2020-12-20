@@ -2,7 +2,7 @@ INSERT INTO reimbursement_status (status)
 VALUES ('approved'),(NULL),('denied'),(NULL),(NULL),(NULL);
 
 INSERT INTO reimbursement_type (reimb_type)
-VALUES ('LODGING'),('FOOD'),('OTHER'),('TRAVEL'),('OTHER'),('FOOD');
+VALUES ('lodging'),('food'),('other'),('travel'),('other'),('food');
 
 INSERT INTO user_roles (us_role)
 VALUES ('Employee'),('Employee'),('Manager'),('Manager'),('Employee'),('Manager');

@@ -26,36 +26,33 @@ public class ReimbService {
 	}
 
 	public boolean newReimbursement(Reimbursement reimbursement) {
-		if (reimbursement != null) {
-			newStatus();
-			newType()
-			double amount = reimbursement.getAmount();
-			int userId = reimbursement.getUserId();
-			if(amount > 0 && userId > 0) {
-				reimbDao.newReimb(reimbursement);
-				return true;
-			}
+		if (reimbursement != null && newStatus() && newType(reimbursement.getType())
+				&& reimbDao.newReimb(reimbursement)) {
+//			newStatus();
+//			newType(reimbursement.getType());
+//			reimbDao.newReimb(reimbursement);
+			return true;
 		}
 		return false;
 	}
-	
-	public List<Reimbursement> allPending(){
+
+	public List<Reimbursement> allPending() {
 		return reimbDao.allPending();
 	}
-	
-	public List<Reimbursement> allPendingById(int userId){
-		if(userId > 0) {
+
+	public List<Reimbursement> allPendingById(int userId) {
+		if (userId > 0) {
 			return reimbDao.allPendingById(userId);
 		}
 		return null;
 	}
-	
-	public List<Reimbursement> allReimbursements(){
+
+	public List<Reimbursement> allReimbursements() {
 		return reimbDao.allReimb();
 	}
-	
-	public List<Reimbursement> allReimbursementsById(int userId){
-		if(userId > 0) {
+
+	public List<Reimbursement> allReimbursementsById(int userId) {
+		if (userId > 0) {
 			return reimbDao.allReimById(userId);
 		}
 		return null;

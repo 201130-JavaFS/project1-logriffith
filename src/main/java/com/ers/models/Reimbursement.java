@@ -12,13 +12,14 @@ public class Reimbursement {
 	private int userId;
 	private int statusId;
 	private int typeId;
+	private String type;
 	
 	public Reimbursement() {
 		super();
 	}
 
 	public Reimbursement(int reimbId, double amount, String submitted, String resolved, String description, int userId,
-			int statusId, int typeId) {
+			int statusId, int typeId, String type) {
 		super();
 		this.reimbId = reimbId;
 		this.amount = amount;
@@ -28,6 +29,20 @@ public class Reimbursement {
 		this.userId = userId;
 		this.statusId = statusId;
 		this.typeId = typeId;
+		this.type = type;
+	}
+
+	public Reimbursement(double amount, String submitted, String resolved, String description, int userId, int statusId,
+			int typeId, String type) {
+		super();
+		this.amount = amount;
+		this.submitted = submitted;
+		this.resolved = resolved;
+		this.description = description;
+		this.userId = userId;
+		this.statusId = statusId;
+		this.typeId = typeId;
+		this.type = type;
 	}
 
 	public Reimbursement(double amount, String submitted, String resolved, String description, int userId, int statusId,
@@ -40,6 +55,14 @@ public class Reimbursement {
 		this.userId = userId;
 		this.statusId = statusId;
 		this.typeId = typeId;
+	}
+	
+	public Reimbursement(double amount, String description, int userId, String type) {
+		super();
+		this.amount = amount;
+		this.description = description;
+		this.userId = userId;
+		this.type = type;
 	}
 
 	public int getReimbId() {
@@ -106,6 +129,14 @@ public class Reimbursement {
 		this.typeId = typeId;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -118,6 +149,7 @@ public class Reimbursement {
 		result = prime * result + ((resolved == null) ? 0 : resolved.hashCode());
 		result = prime * result + statusId;
 		result = prime * result + ((submitted == null) ? 0 : submitted.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		result = prime * result + typeId;
 		result = prime * result + userId;
 		return result;
@@ -153,6 +185,11 @@ public class Reimbursement {
 				return false;
 		} else if (!submitted.equals(other.submitted))
 			return false;
+		if (type == null) {
+			if (other.type != null)
+				return false;
+		} else if (!type.equals(other.type))
+			return false;
 		if (typeId != other.typeId)
 			return false;
 		if (userId != other.userId)
@@ -166,5 +203,6 @@ public class Reimbursement {
 				+ resolved + ", description=" + description + ", userId=" + userId + ", statusId=" + statusId
 				+ ", typeId=" + typeId + "]";
 	}
+
 	
 }

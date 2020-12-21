@@ -11,7 +11,7 @@ public class ReimbQueries {
 	public static final String NEW_REIMB_TYPE = "INSERT INTO reimbursement_type (reimb_type) VALUES (?)";
 	
 	public static final String NEW_REIMBURSEMENT = "INSERT INTO reimbursements (amount, submitted, resolved, description, user_id, status_id, type_id) "
-			+ "VALUES (?, (SELECT now()), NULL, ?, ?, (SELECT max(status_id) FROM reimbursement_status) , (SELECT max(type_id) FROM reimbursement_type)),";
+			+ "VALUES (?, (SELECT now()), NULL, ?, ?, (SELECT max(status_id) FROM reimbursement_status) , (SELECT max(type_id) FROM reimbursement_type))";
 	
 	public static final String GET_ALL_PENDING = "SELECT user_id,amount,description,type_id,submitted FROM reimbursements "
 			+ "INNER JOIN reimbursement_status ON reimbursements.status_id = reimbursement_status.status_id "

@@ -1,5 +1,5 @@
 INSERT INTO reimbursement_status (status)
-VALUES ('approved'),(NULL),('denied'),(NULL),(NULL),(NULL);
+VALUES (NULL),(NULL),(NULL),(NULL),(NULL),(NULL);
 
 INSERT INTO reimbursement_type (reimb_type)
 VALUES ('lodging'),('food'),('other'),('travel'),('other'),('food');
@@ -28,9 +28,9 @@ VALUES
 ('ronman', 'соннш', 'Ron', 'Troupe', 'theron@yahoo.com', 6);
 
 INSERT INTO reimbursements (amount, submitted, resolved, description, user_id, status_id, type_id)
-VALUES (250.25, '2020-12-12 20:25:11', '2020-12-12 20:35:11', 'hotel expenses for story in Gotham', 1, 1 , 1),
+VALUES (250.25, '2020-12-12 20:25:11', null, 'hotel expenses for story in Gotham', 1, 1 , 1),
 (402.50, '2020-12-12 20:30:11', null, 'food for Bobby Bigmouth', 2, 2, 2),
-(1000.99, '2020-12-12 20:40:11', '2020-12-12 20:50:11', 'Elvis Museum Gift Shop', 3, 3, 3),
+(1000.99, '2020-12-12 20:40:11', null, 'Elvis Museum Gift Shop', 3, 3, 3),
 (1155.99, '2020-12-12 21:50:11', null, 'I am a manager', 4, 4, 4),
 (122.95, '2020-12-12 21:05:11', null, 'I have my reasons', 5, 5, 5),
 (259.45, '2020-12-12 21:15:11', null, 'I was hungry, dont judge me', 6, 6, 6);

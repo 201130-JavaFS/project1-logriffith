@@ -88,6 +88,7 @@ public class ReimbDAOImpl implements ReimbDAO {
 		return null;
 	}
 
+	//doesn't work
 	@Override
 	public List<Reimbursement> allPendingById(int userId) {
 		try (Connection connection = DbConnection.getConnection()) {
@@ -116,7 +117,7 @@ public class ReimbDAOImpl implements ReimbDAO {
 	@Override
 	public List<Reimbursement> allReimb() {
 		try (Connection connection = DbConnection.getConnection()) {
-			String sql = ReimbQueries.GET_ALL_REIMB_BY_ID;
+			String sql = ReimbQueries.GET_ALL_REIMB;
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(sql);
 			List<Reimbursement> rlist = new ArrayList<>();
@@ -188,6 +189,17 @@ public class ReimbDAOImpl implements ReimbDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public static void main(String[] args) {
+		ReimbDAO r = new ReimbDAOImpl();
+		List<Reimbursement> rem= r.allReimById(20);
+		if (rem == null) {
+			System.out.println("its null");
+		}
+		for (Reimbursement R : rem) {
+			System.out.println(R);
+		}
 	}
 
 }

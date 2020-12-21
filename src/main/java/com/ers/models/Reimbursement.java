@@ -201,8 +201,10 @@ public class Reimbursement {
 	public String toString() {
 		return "Reimbursement [reimbId=" + reimbId + ", amount=" + amount + ", submitted=" + submitted + ", resolved="
 				+ resolved + ", description=" + description + ", userId=" + userId + ", statusId=" + statusId
-				+ ", typeId=" + typeId + "]";
+				+ ", typeId=" + typeId + ", type=" + type + "]";
 	}
+
+	
 
 	
 }

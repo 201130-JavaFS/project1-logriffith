@@ -19,9 +19,9 @@ public class ReimbQueries {
 	
 	public static final String GET_ALL_PENDING_BY_ID = "SELECT user_id,amount,description,type_id,submitted FROM reimbursements "
 			+ "INNER JOIN reimbursement_status ON reimbursements.status_id = reimbursement_status.status_id "
-			+ "WHERE status IS NULL AND user_id = 2";
+			+ "WHERE status IS NULL AND user_id = ?";
 	
-	public static final String GET_ALL_REIMB_BY_ID = "SELECT user_id,amount,description,type_id,submitted,resolved,reimbursement_status.status_id FROM reimbursements "
+	public static final String GET_ALL_REIMB_BY_ID = "SELECT user_id,amount,description,type_id,submitted,resolved,status_id FROM reimbursements "
 			+ "WHERE user_id = ?";
 	
 	public static final String GET_ALL_REIMB = "SELECT user_id,amount,description,type_id,submitted,resolved, status_id FROM reimbursements";

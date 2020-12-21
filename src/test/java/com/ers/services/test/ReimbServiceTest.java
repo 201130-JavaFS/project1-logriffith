@@ -20,6 +20,7 @@ class ReimbServiceTest {
 		reimbService = new ReimbService();
 	}
 	
+	//this one works
 //	@Test
 //	void testNewReimbursement() {
 //		Reimbursement reimburse = new Reimbursement(7000, "testing services makes me hungry", 5, "food");
@@ -31,15 +32,15 @@ class ReimbServiceTest {
 		 assertFalse(reimbService.newType(" VACATION "));
 	 }
 	 
-	 @Test
-	 void testAllReimbursementsByIdFail() {
-		 assertNull(reimbService.allReimbursementsById(2000));
-	 }
-	 
 //	 @Test
-//	 void testAllReimbursementsById() {
-//		 assertNotNull(reimbService.allReimbursementsById(1));
+//	 void testAllReimbursementsByIdFail() {
+//		 assertNull(reimbService.allReimbursementsById(2000));
 //	 }
+	 
+	 @Test
+	 void testAllReimbursementsById() {
+		 assertNotNull(reimbService.allReimbursementsById(1));
+	 }
 	 
 	 @Test
 	 void testAllPendingByIdFail() {
@@ -55,5 +56,10 @@ class ReimbServiceTest {
 	 @Test 
 	 void testAllPending() {
 		 assertNotNull(reimbService.allPending());
+	 }
+	 
+	 @Test
+	 void testAllReimbursements() {
+		 assertNotNull(reimbService.allReimbursements());
 	 }
 }

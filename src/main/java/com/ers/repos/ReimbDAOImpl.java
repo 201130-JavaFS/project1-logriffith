@@ -88,7 +88,6 @@ public class ReimbDAOImpl implements ReimbDAO {
 		return null;
 	}
 
-	//doesn't work
 	@Override
 	public List<Reimbursement> allPendingById(int userId) {
 		try (Connection connection = DbConnection.getConnection()) {
@@ -96,7 +95,7 @@ public class ReimbDAOImpl implements ReimbDAO {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, userId);
 			List<Reimbursement> rlist = new ArrayList<>();
-			ResultSet resultSet = preparedStatement.executeQuery(sql);
+			ResultSet resultSet = preparedStatement.executeQuery();
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a z");
 			while (resultSet.next()) {
 				Reimbursement reimb = new Reimbursement();
@@ -193,13 +192,17 @@ public class ReimbDAOImpl implements ReimbDAO {
 	
 	public static void main(String[] args) {
 		ReimbDAO r = new ReimbDAOImpl();
-		List<Reimbursement> rem= r.allReimById(20);
+		List<Reimbursement> rem= r.allPendingById(2000);
 		if (rem == null) {
 			System.out.println("its null");
+		}else {
+			System.out.println("Something when wrong. There isn't a user with id 2000");
+
 		}
 		for (Reimbursement R : rem) {
 			System.out.println(R);
 		}
 	}
+	
 
 }

@@ -32,10 +32,10 @@ class ReimbServiceTest {
 		 assertFalse(reimbService.newType(" VACATION "));
 	 }
 	 
-//	 @Test
-//	 void testAllReimbursementsByIdFail() {
-//		 assertNull(reimbService.allReimbursementsById(2000));
-//	 }
+	 @Test
+	 void testAllReimbursementsByIdFail() {
+		 assertTrue(reimbService.allReimbursementsById(2000).size() == 0);
+	 }
 	 
 	 @Test
 	 void testAllReimbursementsById() {
@@ -48,10 +48,10 @@ class ReimbServiceTest {
 	 }
 	 
 	 
-//	 @Test
-//	 void testAllPendingById() {
-//		 assertNotNull(reimbService.allPendingById(5));
-//	 }
+	 @Test
+	 void testAllPendingById() {
+		 assertNotNull(reimbService.allPendingById(5));
+	 }
 	 
 	 @Test 
 	 void testAllPending() {
@@ -61,5 +61,10 @@ class ReimbServiceTest {
 	 @Test
 	 void testAllReimbursements() {
 		 assertNotNull(reimbService.allReimbursements());
+	 }
+	 
+	 @Test
+	 void testAllReimbursementsByIdInvalidEntry() {
+		 assertNull(reimbService.allReimbursementsById(-70));
 	 }
 }

@@ -11,7 +11,7 @@ import com.ers.models.Reimbursement;
 import com.ers.services.ReimbService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ReimburseController {
+public class ReimbController {
 
 	private ReimbService reimbService = new ReimbService();
 	private ObjectMapper objectMapper = new ObjectMapper();
@@ -33,10 +33,10 @@ public class ReimburseController {
 					newReimbDTO.userId, newReimbDTO.type);
 			
 			if(reimbService.newReimbursement(reimbursement)) {
-				response.setStatus(200);
+				response.setStatus(201);
 				response.getWriter().print("New Reimbursement Request");
 			}else {
-				response.setStatus(400);
+				response.setStatus(409);
 				response.getWriter().print("Request couldn't be inserted into DB");
 			}
 		}

@@ -25,7 +25,7 @@
 
         #table1,
         #table2,
-        #table3{
+        #table3 {
             border: none;
         }
 
@@ -103,16 +103,28 @@
                         <th id="newtype"></th>
                     </tr>
                 </thead>
-                <tbody id="newreimb"></tbody>
+                <tbody id="newreimb">
+                    <tr id="newreimbinfo">
+                        <td>
+                            <input type="text" class="form-control" id="getamount">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="getdescript">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="gettype">
+                        </td>
+                    </tr>
+                </tbody>
             </table>
-            <div id = "sendreimb"></div>
+            <div id="sendreimb"></div>
         </div>
         <br>
         <br>
         <div class="row" id="pend-row">
             <h4 class="col-lg-12" id="pendhead"></h4>
             <div id="getpending"></div>
-            <table  id="table2">
+            <table id="table2">
                 <thead>
                     <tr>
                         <th id="penduserid"></th>
@@ -124,7 +136,7 @@
                 </thead>
                 <tbody id="pendreimb"></tbody>
             </table>
-            <div id = "updatepend"></div>
+            <div id="updatepend"></div>
         </div>
         <br>
         <br>
@@ -145,7 +157,7 @@
                 </thead>
                 <tbody id="allreimb"></tbody>
             </table>
-            <div id = "getall"></div>
+            <div id="getall"></div>
         </div>
     </div>
     <script src="ers.js"></script>

@@ -8,10 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ers.controllers.LoginController;
+import com.ers.controllers.ReimbController;
 
 public class PrimaryServlet extends HttpServlet {
 	
 	private LoginController loginController = new LoginController();
+	private ReimbController reimbController = new ReimbController();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		response.setContentType("application/json");
@@ -21,6 +23,10 @@ public class PrimaryServlet extends HttpServlet {
 			case "login":
 				loginController.login(request,response);
 				break;
+			case "new":
+				if(request.getSession(false) != null) {
+					reimbController.newReimbursement(request, response);
+				}
 			case "logout":
 				loginController.logout(request,response);
 				break;

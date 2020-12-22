@@ -48,6 +48,7 @@ public class ReimbController {
 				//log.warn("Request: "+ request + "Response: "+response);
 				response.getWriter().print("Request couldn't be inserted into DB");
 				response.setStatus(409);
+				log.warn("Request couldn't be inserted into DB. Status Code: "+409);
 			}
 		}
 

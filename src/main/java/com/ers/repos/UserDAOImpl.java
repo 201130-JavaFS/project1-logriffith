@@ -38,12 +38,10 @@ public class UserDAOImpl implements UserDAO {
 				//log.trace("found user: " + username);//remove this later
 				user = new User(resultSet.getInt("user_id"), resultSet.getString("username"), resultSet.getString("us_password"),
 						resultSet.getString("first_name"), resultSet.getString("last_name"), resultSet.getString("email"), resultSet.getString("us_role"));
-			}else {
-				//log.info("could not find user: " + username);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			//log.warn(e);
-			e.printStackTrace();
+			log.fatal(e);
+			e.getMessage();
 		}
 	
 		return user;
@@ -60,7 +58,8 @@ public class UserDAOImpl implements UserDAO {
 				return result.getString("reimb_type");
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			log.fatal(e);
+			e.getMessage();
 		}
 		return null;
 	}
@@ -76,7 +75,8 @@ public class UserDAOImpl implements UserDAO {
 				return resultSet.getString("status");
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			log.fatal(e);
+			e.getMessage();
 		}
 		return null;
 	}
@@ -91,7 +91,8 @@ public class UserDAOImpl implements UserDAO {
 			preparedStatement.executeUpdate();
 			return true;
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			log.fatal(e);
+			e.getMessage();
 		}
 		return false;
 	}
@@ -105,7 +106,8 @@ public class UserDAOImpl implements UserDAO {
 			preparedStatement.executeUpdate();
 			return true;
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			log.fatal(e);
+			e.getMessage();
 		}
 		return false;
 	}

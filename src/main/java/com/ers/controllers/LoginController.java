@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.ers.models.LoginDTO;
 import com.ers.models.User;
 import com.ers.services.UserService;
@@ -16,6 +19,7 @@ public class LoginController {
 	
 	private ObjectMapper objectMapper = new ObjectMapper();
 	private UserService userService = new UserService();
+	private static final Logger log = LogManager.getLogger(LoginController.class);
 	
 	public void login(HttpServletRequest request, HttpServletResponse response) throws IOException{
 	
@@ -52,9 +56,11 @@ public class LoginController {
 				}
 				response.setStatus(401);
 				response.getWriter().print("Login Failed");
+				log.warn("The user doesn't match those credentials, Status Code: "+ 401);
+
 			}
 		}else {
-			System.out.println("Wrong method was used.");
+			log.error("Wrong method was used.");
 		}
 		
 	}

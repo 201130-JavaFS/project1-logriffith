@@ -318,7 +318,7 @@ async function findpending(){
         // let allResponse = await fetch(url + "allforuser", { credentials: "include" });
         // console.log(allResponse.status);
 
-        let pendResponse = await fetch(url + "allforuser", {
+        let pendResponse = await fetch(url + "userpending", {
             method: "POST",
             body: JSON.stringify(""),
             credentials: "include"
@@ -352,15 +352,11 @@ async function findpending(){
                 cell5.innerHTML = r.submitted;//fills the cell
                 row.appendChild(cell5);//appends the cell
 
-                let cell6 = document.createElement("td");//create the cell
-                cell6.innerHTML = r.resolved;//fills the cell
-                row.appendChild(cell6);//appends the cell
-
                 let cell7 = document.createElement("td");//create the cell
                 cell7.innerHTML = r.status;//fills the cell
                 row.appendChild(cell7);//appends the cell
 
-                document.getElementById("allreimb").appendChild(row);
+                document.getElementById("pendreimb").appendChild(row);
             }
 
         }

@@ -9,11 +9,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.ers.models.Reimbursement;
 import com.ers.utils.DbConnection;
 import com.ers.utils.ReimbQueries;
 
 public class ReimbDAOImpl implements ReimbDAO {
+	
+	private static final Logger log = LogManager.getLogger(ReimbDAOImpl.class); 
+
 
 	@Override
 	public boolean newStatus() {
@@ -24,7 +30,8 @@ public class ReimbDAOImpl implements ReimbDAO {
 			statement.executeUpdate(sql);
 			statusAdded = true;
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			log.fatal(e);
+			e.getMessage();
 		}
 		return statusAdded;
 	}
@@ -39,7 +46,8 @@ public class ReimbDAOImpl implements ReimbDAO {
 			preparedStatement.executeUpdate();
 			typeAdded = true;
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			log.fatal(e);
+			e.getMessage();
 		}
 		return typeAdded;
 	}
@@ -59,7 +67,8 @@ public class ReimbDAOImpl implements ReimbDAO {
 			reimbAdded = true;
 			// Chris said that this would work too: preparedStatement.setTimestamp(3,Timestamp.valueOf(LocalDateTime.now()))
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			log.fatal(e);
+			e.getMessage();
 		}
 		return reimbAdded;
 	}
@@ -83,7 +92,8 @@ public class ReimbDAOImpl implements ReimbDAO {
 			}
 			return rlist;
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			log.fatal(e);
+			e.getMessage();
 		}
 		return null;
 	}
@@ -108,7 +118,8 @@ public class ReimbDAOImpl implements ReimbDAO {
 			}
 			return rlist;
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			log.fatal(e);
+			e.getMessage();
 		}
 		return null;
 	}
@@ -146,7 +157,8 @@ public class ReimbDAOImpl implements ReimbDAO {
 			}
 			return rlist;
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			log.fatal(e);
+			e.getMessage();
 		}
 		return null;
 	}
@@ -185,7 +197,8 @@ public class ReimbDAOImpl implements ReimbDAO {
 			}
 			return rlist;
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			log.fatal(e);
+			e.getMessage();
 		}
 		return null;
 	}

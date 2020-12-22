@@ -7,11 +7,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.ers.controllers.LoginController;
 import com.ers.controllers.ReimbController;
 
 public class PrimaryServlet extends HttpServlet {
 	
+	private static final Logger log = LogManager.getLogger(PrimaryServlet.class); 
+
 	private LoginController loginController = new LoginController();
 	private ReimbController reimbController = new ReimbController();
 	
@@ -60,6 +65,9 @@ public class PrimaryServlet extends HttpServlet {
 				break;
 			case "logout":
 				loginController.logout(request,response);
+				break;
+			default:
+				log.warn("Something went wrong with the switch statement.");
 				break;
 		}
 	}

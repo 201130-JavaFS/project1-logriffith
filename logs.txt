@@ -1,2 +1,4 @@
 2020-12-21 23:04:23 INFO  ReimbController:43 - org.apache.catalina.connector.ResponseFacade@70a89023
 2020-12-22 04:26:51 WARN  PrimaryServlet:70 - Something went wrong with the switch statement.
+2020-12-22 07:51:21 WARN  PrimaryServlet:70 - Something went wrong with the switch statement.
+2020-12-22 09:27:25 WARN  PrimaryServlet:70 - Something went wrong with the switch statement.

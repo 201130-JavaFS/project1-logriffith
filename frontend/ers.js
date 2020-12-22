@@ -327,6 +327,7 @@ async function findpending(){
         if (pendResponse.status === 200) {
             let all = await pendResponse.json();//get json response and store in JS object
             //data is going to be an array because we are going to get all of the Reimbursements
+            console.log(all);
 
             for (let r of all) {
                 console.log(r);

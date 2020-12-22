@@ -65,6 +65,7 @@ public class ReimbService {
 					r.setStatus("pending");
 				}
 			}
+			return allUserPending;
 		}
 		return null;
 	}
@@ -99,6 +100,14 @@ public class ReimbService {
 		}
 		return null;
 	}
+	
+//	public static void main(String[] args) {
+//		ReimbService r = new ReimbService();
+//		List<Reimbursement> reimb = r.allPending();
+//		List<Reimbursement> reimb2 = r.allPendingById(2);
+//		System.out.println(reimb);
+//		System.out.println(reimb2);
+//	}
 
 }
 

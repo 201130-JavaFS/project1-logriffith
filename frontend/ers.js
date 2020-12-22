@@ -1,6 +1,6 @@
 const url = 'http://localhost:8080/project-1/';
 let userRole;
-let employeeId;
+
 
 document.getElementById("loginbtn").addEventListener("click", login);
 
@@ -32,7 +32,6 @@ async function login() {
 
         console.log(user);
         userRole = user.role;
-        employeeId = user.userId;
 
         let logout = document.getElementById("header");
         let logoutButton = document.createElement("button");
@@ -108,7 +107,6 @@ async function logoutFunc() {
     let logoutResponse = await fetch(url + "logout", { credentials: "include" });
     if (logoutResponse.status === 200) {
         userRole = null;
-        userId = null;
         console.log("Logged Out Successfully");
     } else {
         console.log("Logout Failed")
@@ -126,7 +124,6 @@ async function sendReimb(){
     console.log(newAmount);
 
     let reimbursement = {
-        userId : employeeId,
         amount : newAmount,
         description : newDescript,
         type : newType
@@ -143,7 +140,7 @@ async function sendReimb(){
     console.log(response.status);
 
     if (response.status === 201){
-        document.getElementById("newbtn").innerText = "Reimbursement Request Submitted";
+        document.getElementById("newbtn").innerText = "Request Submitted";
         console.log("Reimbursement recorded");
     }else{
         document.getElementById("newbtn").innerText = "Reimbursement Request Couldn't be Sent";

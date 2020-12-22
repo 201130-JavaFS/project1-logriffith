@@ -26,7 +26,10 @@ public class PrimaryServlet extends HttpServlet {
 			case "new":
 				if(request.getSession(false) != null) {
 					reimbController.newReimbursement(request, response);
+				}else {
+					response.setStatus(403);
 				}
+				break;
 			case "logout":
 				loginController.logout(request,response);
 				break;

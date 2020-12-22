@@ -11,6 +11,9 @@ import java.util.List;
 
 import javax.naming.spi.DirStateFactory.Result;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.ers.models.Reimbursement;
 import com.ers.models.User;
 import com.ers.utils.DbConnection;
@@ -19,6 +22,7 @@ import com.ers.utils.ReimbQueries;
 public class UserDAOImpl implements UserDAO {
 	
 	//public static Logger log = Logger.getLogger(UserDAOImpl.class);
+	private static final Logger log = LogManager.getLogger(UserDAOImpl.class); 
 
 	@Override
 	public User getUser(String username, String password) {

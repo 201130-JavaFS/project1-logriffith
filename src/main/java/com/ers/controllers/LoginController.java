@@ -30,15 +30,17 @@ public class LoginController {
 			
 			String body = new String(stringBuilder);//puts the body in String object
 			LoginDTO loginDTO = objectMapper.readValue(body, LoginDTO.class); //takes the JSON data as a string and stores it as a LoginDTO object
-			if(userService.login(loginDTO.username, loginDTO.password) != null) {
+			User user = userService.login(loginDTO.username, loginDTO.password);
+			
+			if(user != null) {
 				HttpSession httpSession = request.getSession();//returns the current session or creates one if it doesn't exist
 
-				User user = userService.login(loginDTO.username, loginDTO.password);
 				//user.setPassword(null);
 				String json = objectMapper.writeValueAsString(user);//converts the user into a JSON String 
 				response.getWriter().print(json);
 				
 				//these setAttributes remain in the server
+				httpSession.setAttribute("userId", user.getUserId());
 				httpSession.setAttribute("user", loginDTO);
 				httpSession.setAttribute("logged in", true);
 				response.setStatus(200);//login was successful

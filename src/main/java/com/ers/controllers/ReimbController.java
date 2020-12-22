@@ -5,6 +5,10 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.ers.models.NewReimbDTO;
 import com.ers.models.Reimbursement;
@@ -15,6 +19,7 @@ public class ReimbController {
 
 	private ReimbService reimbService = new ReimbService();
 	private ObjectMapper objectMapper = new ObjectMapper();
+	private static final Logger log = LogManager.getLogger(ReimbController.class); 
 
 	public void newReimbursement(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -29,15 +34,19 @@ public class ReimbController {
 
 			String body = stringBuilder.toString();
 			NewReimbDTO newReimbDTO = objectMapper.readValue(body, NewReimbDTO.class);
+			HttpSession httpSession = request.getSession(false);
+			int userId = (int) httpSession.getAttribute("userId");
 			Reimbursement reimbursement = new Reimbursement(newReimbDTO.amount, newReimbDTO.description,
-					newReimbDTO.userId, newReimbDTO.type);
+					userId, newReimbDTO.type);
 			
 			if(reimbService.newReimbursement(reimbursement)) {
-				response.setStatus(201);
+				log.info(response);
 				response.getWriter().print("New Reimbursement Request");
+				response.setStatus(201);
 			}else {
-				response.setStatus(409);
+				log.warn("Request: "+ request + "Response: "+response);
 				response.getWriter().print("Request couldn't be inserted into DB");
+				response.setStatus(409);
 			}
 		}
 

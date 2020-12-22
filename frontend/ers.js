@@ -107,7 +107,7 @@ async function login() {
         allReimbsBtn.id = "allreimbbtn";
         allReimbsBtn.className = "btn btn-danger";
         allReimbs.appendChild(allReimbsBtn);
-        document.getElementById("allreimbbtn").innerText = "Get All";
+        document.getElementById("allreimbbtn").innerText = "Find All";
         document.getElementById("allreimbbtn").addEventListener("click", getAll);
 
 
@@ -135,11 +135,14 @@ async function sendReimb() {
     console.log("Making new Reimbursement Request");
 
     let newAmount = document.getElementById("getamount").value;
-    newAmount.className = "form-control";
+    newAmount.className = "col-sm-4 form-control";
+    newAmount.type = "text";
     let newDescript = document.getElementById("getdescript").value;
-    newDescript.className = "form-control";
+    newDescript.className = "col-sm-4 form-control";
+    newDescript.type = "text";
     let newType = document.getElementById("gettype").value;
-    newType.className = "form-control";
+    newType.className = "col-sm-4 form-control";
+    newType.type = "text";
 
     newAmount = Number(newAmount);
     console.log(newAmount);
@@ -161,7 +164,7 @@ async function sendReimb() {
     console.log(response.status);
 
     if (response.status === 201) {
-        document.getElementById("newbtn").innerText = "Request Submitted";
+        //document.getElementById("newbtn").innerText = "Request Submitted";
         console.log("Reimbursement recorded");
     } else {
         document.getElementById("newbtn").innerText = "Reimbursement Request Couldn't be Sent";

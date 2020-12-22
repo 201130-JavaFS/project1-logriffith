@@ -190,19 +190,19 @@ public class ReimbDAOImpl implements ReimbDAO {
 		return null;
 	}
 	
-	public static void main(String[] args) {
-		ReimbDAO r = new ReimbDAOImpl();
-		List<Reimbursement> rem= r.allPendingById(2000);
-		if (rem == null) {
-			System.out.println("its null");
-		}else {
-			System.out.println("Something when wrong. There isn't a user with id 2000");
-
-		}
-		for (Reimbursement R : rem) {
-			System.out.println(R);
-		}
-	}
+//	public static void main(String[] args) {
+//		ReimbDAO r = new ReimbDAOImpl();
+//		List<Reimbursement> rem= r.allPendingById(2000);
+//		if (rem == null) {
+//			System.out.println("its null");
+//		}else {
+//			System.out.println("Something when wrong. There isn't a user with id 2000");
+//
+//		}
+//		for (Reimbursement R : rem) {
+//			System.out.println(R);
+//		}
+//	}
 	
 
 }

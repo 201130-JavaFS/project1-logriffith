@@ -11,7 +11,8 @@ public class Reimbursement {
 	private int statusId;
 	private int typeId;
 	private String type;
-	
+	private String status;
+
 	public Reimbursement() {
 		super();
 	}
@@ -133,6 +134,14 @@ public class Reimbursement {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@Override

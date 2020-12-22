@@ -44,6 +44,13 @@ public class PrimaryServlet extends HttpServlet {
 					response.setStatus(403);
 				}
 				break;
+			case "allforuser":
+				if(request.getSession(false) != null) {
+					
+				}else {
+					response.setStatus(403);
+				}
+				break;
 			case "logout":
 				loginController.logout(request,response);
 				break;

@@ -66,6 +66,15 @@ public class ReimbController {
 		response.getWriter().print(json);
 		response.setStatus(200);
 	}
+	
+	public void allReimbursementsForUser(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		HttpSession httpSession = request.getSession(false);
+		int userId = (int) httpSession.getAttribute("userId");
+		List<Reimbursement> userReimb = reimbService.allReimbursementsById(userId); 
+		String json = objectMapper.writeValueAsString(userReimb);
+		response.getWriter().print(json);
+		response.setStatus(200);
+	}
 
 }
 //public static final String NEW_REIMB_STATUS = "INSERT INTO reimbursement_status (status) VALUES (NULL)";

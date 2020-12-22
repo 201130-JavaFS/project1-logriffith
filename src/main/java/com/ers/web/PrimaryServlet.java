@@ -46,7 +46,7 @@ public class PrimaryServlet extends HttpServlet {
 				break;
 			case "allforuser":
 				if(request.getSession(false) != null) {
-					
+					reimbController.allReimbursementsForUser(request, response);
 				}else {
 					response.setStatus(403);
 				}

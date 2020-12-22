@@ -85,6 +85,14 @@ async function login() {
         document.getElementById("pendsubmit").innerText = "Submitted On";
         document.getElementById("pendstatus").innerText = "Status";
 
+        let pending = document.getElementById("findpend");
+        let pendingBtn = document.createElement("button");
+        pendingBtn.id = "pendingbtn";
+        pendingBtn.className = "btn btn-danger";
+        pending.appendChild(pendingBtn);
+        document.getElementById("pendingbtn").innerText = "Find Pending";
+        document.getElementById("pendingbtn").addEventListener("click", findpending);
+
         document.getElementById("allhead").innerText = "All Reimbursements:";
         document.getElementById("userid").innerText = "EmployeeId";
         document.getElementById("amount").innerText = "Amount";
@@ -221,6 +229,103 @@ async function getAll() {
 
         if (allResponse.status === 200) {
             let all = await allResponse.json();//get json response and store in JS object
+            //data is going to be an array because we are going to get all of the Reimbursements
+
+            for (let r of all) {
+                console.log(r);
+                let row = document.createElement("tr");
+
+                let cell1 = document.createElement("td");//create the cell
+                cell1.innerHTML = r.userId;//fills the cell
+                row.appendChild(cell1);//appends the cell
+
+                let cell2 = document.createElement("td");//create the cell
+                cell2.innerHTML = r.amount;//fills the cell
+                row.appendChild(cell2);//appends the cell
+
+                let cell3 = document.createElement("td");//create the cell
+                cell3.innerHTML = r.description;//fills the cell
+                row.appendChild(cell3);//appends the cell
+
+                let cell4 = document.createElement("td");//create the cell
+                cell4.innerHTML = r.type;//fills the cell
+                row.appendChild(cell4);//appends the cell
+
+                let cell5 = document.createElement("td");//create the cell
+                cell5.innerHTML = r.submitted;//fills the cell
+                row.appendChild(cell5);//appends the cell
+
+                let cell6 = document.createElement("td");//create the cell
+                cell6.innerHTML = r.resolved;//fills the cell
+                row.appendChild(cell6);//appends the cell
+
+                let cell7 = document.createElement("td");//create the cell
+                cell7.innerHTML = r.status;//fills the cell
+                row.appendChild(cell7);//appends the cell
+
+                document.getElementById("allreimb").appendChild(row);
+            }
+
+        }
+    }
+}
+
+async function findpending(){
+    document.getElementById("pendreimb").innerHTML = "";
+    if (userRole === "Manager") {
+        let pendResponse = await fetch(url + "allpending", { credentials: "include" });
+        console.log(pendResponse.status);
+
+        if (pendResponse.status === 200) {
+            let all = await pendResponse.json();//get json response and store in JS object
+            //data is going to be an array because we are going to get all of the Reimbursements
+
+            for (let r of all) {
+                console.log(r);
+                let row = document.createElement("tr");
+
+                let cell1 = document.createElement("td");//create the cell
+                cell1.innerHTML = r.userId;//fills the cell
+                row.appendChild(cell1);//appends the cell
+
+                let cell2 = document.createElement("td");//create the cell
+                cell2.innerHTML = r.amount;//fills the cell
+                row.appendChild(cell2);//appends the cell
+
+                let cell3 = document.createElement("td");//create the cell
+                cell3.innerHTML = r.description;//fills the cell
+                row.appendChild(cell3);//appends the cell
+
+                let cell4 = document.createElement("td");//create the cell
+                cell4.innerHTML = r.type;//fills the cell
+                row.appendChild(cell4);//appends the cell
+
+                let cell5 = document.createElement("td");//create the cell
+                cell5.innerHTML = r.submitted;//fills the cell
+                row.appendChild(cell5);//appends the cell
+
+                let cell6 = document.createElement("td");//create the cell
+                cell6.innerHTML = r.status;//fills the cell
+                row.appendChild(cell6);//appends the cell
+
+                document.getElementById("pendreimb").appendChild(row);
+            }
+        } else {
+            console.log("status is not 200");
+        }
+
+    } else {
+        // let allResponse = await fetch(url + "allforuser", { credentials: "include" });
+        // console.log(allResponse.status);
+
+        let pendResponse = await fetch(url + "allforuser", {
+            method: "POST",
+            body: JSON.stringify(""),
+            credentials: "include"
+        });
+
+        if (pendResponse.status === 200) {
+            let all = await pendResponse.json();//get json response and store in JS object
             //data is going to be an array because we are going to get all of the Reimbursements
 
             for (let r of all) {

@@ -83,6 +83,7 @@ async function login() {
         document.getElementById("penddescription").innerText = "Description";
         document.getElementById("pendtype").innerText = "Type";
         document.getElementById("pendsubmit").innerText = "Submitted On";
+        document.getElementById("pendstatus").innerText = "Status";
 
         document.getElementById("allhead").innerText = "All Reimbursements:";
         document.getElementById("userid").innerText = "EmployeeId";

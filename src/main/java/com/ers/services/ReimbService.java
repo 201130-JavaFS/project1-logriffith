@@ -43,13 +43,28 @@ public class ReimbService {
 		List<Reimbursement> allPending = reimbDao.allPending();
 		for (Reimbursement r : allPending) {
 			r.setType(userDAO.getType(r.getTypeId()));
+			String status = userDAO.getStatus(r.getStatusId());
+			if (status != null) {
+				r.setStatus(status);
+			}else {
+				r.setStatus("pending");
+			}
 		}
 		return allPending;
 	}
 
 	public List<Reimbursement> allPendingById(int userId) {
 		if (userId > 0) {
-			return reimbDao.allPendingById(userId);
+			List<Reimbursement> allUserPending = reimbDao.allPendingById(userId);
+			for (Reimbursement r : allUserPending) {
+				r.setType(userDAO.getType(r.getTypeId()));
+				String status = userDAO.getStatus(r.getStatusId());
+				if (status != null) {
+					r.setStatus(status);
+				}else {
+					r.setStatus("pending");
+				}
+			}
 		}
 		return null;
 	}

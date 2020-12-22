@@ -53,6 +53,16 @@ public class ReimbController {
 
 	}
 	
+	public void allPendingForUser(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		HttpSession httpSession = request.getSession(false);
+		int userId = (int) httpSession.getAttribute("userId");
+		List<Reimbursement> userPendingList = reimbService.allPendingById(userId);
+		String json = objectMapper.writeValueAsString(userPendingList);
+		response.getWriter().print(json);
+		response.setStatus(200);
+		
+	}
+	
 	public void allPending(HttpServletResponse response) throws IOException{
 		List<Reimbursement> pendingList = reimbService.allPending();
 		String json = objectMapper.writeValueAsString(pendingList);
@@ -77,9 +87,3 @@ public class ReimbController {
 	}
 
 }
-//public static final String NEW_REIMB_STATUS = "INSERT INTO reimbursement_status (status) VALUES (NULL)";
-//
-//public static final String NEW_REIMB_TYPE = "INSERT INTO reimbursement_type (reimb_type) VALUES (?)";
-//
-//public static final String NEW_REIMBURSEMENT = "INSERT INTO reimbursements (amount, submitted, resolved, description, user_id, status_id, type_id) "
-//		+ "VALUES (?, (SELECT now()), NULL, ?, ?, (SELECT max(status_id) FROM reimbursement_status) , (SELECT max(type_id) FROM reimbursement_type))";

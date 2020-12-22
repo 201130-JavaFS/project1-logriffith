@@ -23,6 +23,7 @@ public class PrimaryServlet extends HttpServlet {
 				break;
 			case "logout":
 				loginController.logout(request,response);
+				break;
 		}
 	}
 	

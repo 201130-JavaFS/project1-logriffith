@@ -1,7 +1,5 @@
 package com.ers.models;
 
-import java.util.Date;
-
 public class Reimbursement {
 	
 	private int reimbId;

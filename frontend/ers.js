@@ -117,8 +117,11 @@ async function sendReimb(){
     console.log("Making new Reimbursement Request");
 
     let newAmount = document.getElementById("getamount").value;
+    newAmount.className = "form-control";
     let newDescript = document.getElementById("getdescript").value;
+    newDescript.className = "form-control";
     let newType = document.getElementById("gettype").value;
+    newType.className = "form-control";
 
     newAmount = Number(newAmount);
     console.log(newAmount);

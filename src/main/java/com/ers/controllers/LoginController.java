@@ -40,6 +40,7 @@ public class LoginController {
 				response.getWriter().print(json);
 				
 				//these setAttributes remain in the server
+				httpSession.setAttribute("role", user.getRole());
 				httpSession.setAttribute("userId", user.getUserId());
 				httpSession.setAttribute("user", loginDTO);
 				httpSession.setAttribute("logged in", true);

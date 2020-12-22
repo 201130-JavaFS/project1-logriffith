@@ -2,6 +2,7 @@ package com.ers.controllers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,16 +41,30 @@ public class ReimbController {
 					userId, newReimbDTO.type);
 			
 			if(reimbService.newReimbursement(reimbursement)) {
-				log.info(response);
+				//log.info(response);
 				response.getWriter().print("New Reimbursement Request");
 				response.setStatus(201);
 			}else {
-				log.warn("Request: "+ request + "Response: "+response);
+				//log.warn("Request: "+ request + "Response: "+response);
 				response.getWriter().print("Request couldn't be inserted into DB");
 				response.setStatus(409);
 			}
 		}
 
+	}
+	
+	public void allPending(HttpServletResponse response) throws IOException{
+		List<Reimbursement> pendingList = reimbService.allPending();
+		String json = objectMapper.writeValueAsString(pendingList);
+		response.getWriter().print(json);
+		response.setStatus(200);
+	}
+	
+	public void allReimburements(HttpServletResponse response) throws IOException{
+		List<Reimbursement> allReimb = reimbService.allReimbursements();
+		String json = objectMapper.writeValueAsString(allReimb);
+		response.getWriter().print(json);
+		response.setStatus(200);
 	}
 
 }

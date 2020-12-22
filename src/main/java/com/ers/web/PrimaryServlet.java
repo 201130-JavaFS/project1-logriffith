@@ -30,6 +30,20 @@ public class PrimaryServlet extends HttpServlet {
 					response.setStatus(403);
 				}
 				break;
+			case "allpending":
+				if(request.getSession(false) != null) {
+					reimbController.allPending(response);
+				}else {
+					response.setStatus(403);
+				}
+				break;
+			case "all":
+				if(request.getSession(false) != null) {
+					reimbController.allReimburements(response);
+				}else {
+					response.setStatus(403);
+				}
+				break;
 			case "logout":
 				loginController.logout(request,response);
 				break;

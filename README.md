@@ -38,7 +38,7 @@ The back-end system shall use JDBC to connect to a Postgres database. The applic
 
 ## Features
 * User/Employee can login
-* After loggin in, user can make a new reimbursement request
+* After logging in, user can make a new reimbursement request
 * Regular employees can view all of their pending requests, as well as all of their previous requests
 * Managers can view all pending requests, as well as all requests for the company
 * User's name and role in the company is displayed in the single page application (SPA)

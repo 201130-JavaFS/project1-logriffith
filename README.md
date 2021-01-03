@@ -62,5 +62,8 @@ The back-end system shall use JDBC to connect to a Postgres database. The applic
 * Clone the repository on your local system
 * Set the JRE in Spring Tool Suite to JKD 1.8
 * In DBeaver, execute the command "CREATE DATABASE ers;" in a SQL Editor
-* Then, execute the PostgresSQL scripts in the sql folder in the repository
+* Then, execute the PostgresSQL scripts in the sql folder in the repository (ERS_Tables.sql first)
+* Assign database username and password to the appropriate references in com.ers.utils.DbConnection (environment variable - optional)
+* Assign 127 to the encryption key reference
+
 

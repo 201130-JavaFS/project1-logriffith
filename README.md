@@ -56,7 +56,7 @@ The back-end system shall use JDBC to connect to a Postgres database. The applic
 * Apache Maven - version 3.6.3
 * Apache Tomcat 9
 * DBeaver - version 7.3.0
-* [Click here] (https://github.com/201130-JavaFS/Environment-Installation-Guide) for help with this process
+* [Click here](https://github.com/201130-JavaFS/Environment-Installation-Guide) for help with this process
 
 **Setup:**
 * Clone the repository on your local system

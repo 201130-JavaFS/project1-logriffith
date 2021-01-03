@@ -28,5 +28,5 @@ The back-end system shall use JDBC to connect to a Postgres database. The applic
 
 
 ## Technologies Used
-*Java 8
+* Java 8
 *

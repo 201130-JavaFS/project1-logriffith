@@ -52,11 +52,11 @@ The back-end system shall use JDBC to connect to a Postgres database. The applic
 ## Getting Started
 **Download and Install:**
 * Java SE Development Kit 8
-* Spring Tool Suite 4 - version 4.8.1 
-* Apache Maven - version 3.6.3
+* Spring Tool Suite 4
+* Apache Maven
 * Apache Tomcat 9
 * Latest version of PostgresSQL
-* DBeaver - version 7.3.0
+* DBeaver
 * [Click here](https://github.com/201130-JavaFS/Environment-Installation-Guide) for help with this process
 
 **Setup:**

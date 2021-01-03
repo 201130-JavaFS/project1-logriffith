@@ -2,3 +2,11 @@
 2020-12-22 04:26:51 WARN  PrimaryServlet:70 - Something went wrong with the switch statement.
 2020-12-22 07:51:21 WARN  PrimaryServlet:70 - Something went wrong with the switch statement.
 2020-12-22 09:27:25 WARN  PrimaryServlet:70 - Something went wrong with the switch statement.
+2020-12-22 11:20:33 WARN  PrimaryServlet:70 - Default case in switch statement was activated.
+2020-12-22 11:44:07 WARN  PrimaryServlet:70 - Default case in switch statement was activated.
+2020-12-22 11:44:50 WARN  LoginController:59 - The user doesn't match those credentials, Status Code: 401
+2020-12-22 11:48:57 WARN  LoginController:59 - The user doesn't match those credentials, Status Code: 401
+2020-12-22 11:53:09 WARN  ReimbController:51 - Request couldn't be inserted into DB. Status Code: 409
+2020-12-22 12:04:12 WARN  PrimaryServlet:70 - Default case in switch statement was activated.
+2020-12-22 13:33:48 WARN  LoginController:59 - The user doesn't match those credentials, Status Code: 401
+2021-01-01 21:33:46 WARN  PrimaryServlet:70 - Default case in switch statement was activated.

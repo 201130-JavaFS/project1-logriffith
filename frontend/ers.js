@@ -33,6 +33,7 @@ async function login() {
         console.log(user);
         userRole = user.role;
 
+        //create logout button
         let logout = document.getElementById("header");
         let logoutButton = document.createElement("button");
         logoutButton.id = "logoutbtn";
@@ -41,6 +42,7 @@ async function login() {
         document.getElementById("logoutbtn").innerText = "Log Out";
         document.getElementById("logoutbtn").addEventListener("click", logoutFunc);
 
+        //put user identification on page
         let name = document.getElementById("user");
         let identifier = document.createElement("h5");
         identifier.id = "identifyuser";
@@ -51,7 +53,7 @@ async function login() {
         document.getElementById("identifyuser").innerText = userRole + ": " + user.firstName + " " + user.lastName;
         console.log("Request Succeeded!")
 
-        //let data = document.getElementById("data");
+        //modify tables/develop tables
         let newReimbTable = document.getElementById("table1");
         newReimbTable.className = "table table-hover table-bordered";
         newReimbTable.id = "newreimbtable";
@@ -69,6 +71,23 @@ async function login() {
         document.getElementById("newdescription").innerText = "Description";
         document.getElementById("newtype").innerText = "Type";
 
+        //create new reimbursement input elements
+        let newAmount = document.getElementById("input-amount");
+        let inputAmount = document.createElement("input");
+        inputAmount.id = 'getamount';
+        newAmount.appendChild(inputAmount);
+
+        let newDescription = document.getElementById('input-description');
+        let inputDescription = document.createElement('input');
+        inputDescription.id = 'getdescript';
+        newDescription.appendChild(inputDescription);
+
+        let newType = document.getElementById("input-type");
+        let inputType = document.createElement('input');
+        inputType.id = "get-type";
+        newType.appendChild(inputType);
+
+        //create new reimbursement button
         let newReimb = document.getElementById("sendreimb");
         let sendNew = document.createElement("button");
         sendNew.id = "newbtn";
@@ -85,6 +104,7 @@ async function login() {
         document.getElementById("pendsubmit").innerText = "Submitted On";
         document.getElementById("pendstatus").innerText = "Status";
 
+        //create button for getting the pending reimbursements
         let pending = document.getElementById("findpend");
         let pendingBtn = document.createElement("button");
         pendingBtn.id = "pendingbtn";
@@ -102,6 +122,7 @@ async function login() {
         document.getElementById("submitted").innerText = "Submitted On";
         document.getElementById("resolved").innerText = "Resolved On";
 
+        //create button for getting all reimbursements
         let allReimbs = document.getElementById("getall");
         let allReimbsBtn = document.createElement("button");
         allReimbsBtn.id = "allreimbbtn";

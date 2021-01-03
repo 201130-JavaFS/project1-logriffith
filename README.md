@@ -29,10 +29,10 @@ The back-end system shall use JDBC to connect to a Postgres database. The applic
 ## Technologies Used
 * Java SE Development Kit 8
 * Git
-* Spring Tool Suite 4 - version 4.8.1 
-* Apache Maven - version 3.6.3
+* Spring Tool Suite 4
+* Apache Maven 
 * Apache Tomcat 9
-* DBeaver - version 7.3.0
+* DBeaver
 * Visual Studio Code
 * Postman
 

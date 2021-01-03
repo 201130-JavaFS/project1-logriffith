@@ -55,6 +55,7 @@ The back-end system shall use JDBC to connect to a Postgres database. The applic
 * Spring Tool Suite 4 - version 4.8.1 
 * Apache Maven - version 3.6.3
 * Apache Tomcat 9
+* Latest version of PostgresSQL
 * DBeaver - version 7.3.0
 * [Click here](https://github.com/201130-JavaFS/Environment-Installation-Guide) for help with this process
 

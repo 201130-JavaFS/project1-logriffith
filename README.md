@@ -48,3 +48,19 @@ The back-end system shall use JDBC to connect to a Postgres database. The applic
 * Add feature for manager to approve or deny requests that are not their own
 * Improve the functionality of the front end
 * Make the client view more appealing
+
+## Getting Started
+**Download and Install:**
+* Java SE Development Kit 8
+* Spring Tool Suite 4 - version 4.8.1 
+* Apache Maven - version 3.6.3
+* Apache Tomcat 9
+* DBeaver - version 7.3.0
+* [Click here] (https://github.com/201130-JavaFS/Environment-Installation-Guide) for help with this process
+
+**Setup:**
+* Clone the repository on your local system
+* Set the JRE in Spring Tool Suite to JKD 1.8
+* In DBeaver, execute the command "CREATE DATABASE ers;" in a SQL Editor
+* Then, execute the PostgresSQL scripts in the sql folder in the repository
+

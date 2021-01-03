@@ -27,6 +27,6 @@ Employees must select the type of reimbursement as: LODGING, TRAVEL, FOOD, or OT
 The back-end system shall use JDBC to connect to a Postgres database. The application shall deploy onto a Tomcat Server. The middle tier shall use Servlet technology for dynamic Web application development. The front-end view shall use HTML/CSS/JavaScript to make an application that can call server-side components in a generally RESTful manner. Passwords shall be encrypted in Java and securely stored in the database. The middle tier shall follow proper layered architecture, have reasonable (~70%) test coverage of the service layer, and implement log4j for appropriate logging. Webpages shall be styled to be functional and readable. 
 
 
-##Technologies Used##
+##Technologies Used
 *Java 8
 *

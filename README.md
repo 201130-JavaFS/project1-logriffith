@@ -44,5 +44,5 @@ The back-end system shall use JDBC to connect to a Postgres database. The applic
 * User's name and role in the company is displayed in the single page application (SPA)
 * User can log out, which invalidates the session
 
-** To-do List:
+**To-do List:**
 

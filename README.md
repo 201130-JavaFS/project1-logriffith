@@ -45,4 +45,6 @@ The back-end system shall use JDBC to connect to a Postgres database. The applic
 * User can log out, which invalidates the session
 
 **To-do List:**
-
+* Add feature for manager to approve or deny requests that are not their own
+* Improve the functionality of the front end
+* Make the client view more appealing

@@ -65,5 +65,9 @@ The back-end system shall use JDBC to connect to a Postgres database. The applic
 * Then, execute the PostgresSQL scripts in the sql folder in the repository (ERS_Tables.sql first)
 * Assign database username and password to the appropriate references in com.ers.utils.DbConnection (environment variable - optional)
 * Assign 127 to the encryption key reference
+* Import local repository into Spring Tool Suite
+* Right-click on project and under "Maven" select "Update Project"
+* Alter the file path in the log4j2.properties file to suit your needs
 
-
+## Usage
+In Spring Tool Suite, right-click on the project and under "Run-As" select "Run on Server." Next, select the path for Tomcat 9 on the system (only needed the first time the application runs) and click finish. In the "frontend" folder in the local repository, double click on the ers.html file to open the application in a browser. Finally, login using the usernames and passwords listed in ERS_Insert.sql.

@@ -161,7 +161,7 @@ async function sendReimb() {
     let newDescript = document.getElementById("getdescript").value;
     newDescript.className = "col-sm-4 form-control";
     newDescript.type = "text";
-    let newType = document.getElementById("gettype").value;
+    let newType = document.getElementById("get-type").value;
     newType.className = "col-sm-4 form-control";
     newType.type = "text";
 

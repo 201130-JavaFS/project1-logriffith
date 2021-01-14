@@ -9,7 +9,7 @@ public class DbConnection {
 	private static Connection connection;
 	
 	//constructor is private so the class cannot be instantiated
-	public DbConnection() {
+	private DbConnection() {
 		
 	}
 	
@@ -28,7 +28,7 @@ public class DbConnection {
 //		} catch(SQLException e) {
 //			e.printStackTrace();
 //		} catch (ClassNotFoundException e1) {
-//			// TODO Auto-generated catch block
+//			
 //			e1.printStackTrace();
 //		}
 //	}

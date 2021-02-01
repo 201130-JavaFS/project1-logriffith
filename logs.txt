@@ -11,3 +11,4 @@
 2020-12-22 13:33:48 WARN  LoginController:59 - The user doesn't match those credentials, Status Code: 401
 2021-01-01 21:33:46 WARN  PrimaryServlet:70 - Default case in switch statement was activated.
 2021-01-03 21:30:17 WARN  PrimaryServlet:70 - Default case in switch statement was activated.
+2021-02-01 12:56:09 WARN  PrimaryServlet:70 - Default case in switch statement was activated.

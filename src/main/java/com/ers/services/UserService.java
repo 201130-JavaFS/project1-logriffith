@@ -64,7 +64,7 @@ public class UserService {
 		return false;
 	}
 
-	public boolean updateStatus(int userId, int statusId, String newStatus) {
+	public boolean resolve(int userId, int statusId, String newStatus) {
 		newStatus = newStatus.trim().toLowerCase();
 		if (statusId > 0 && (newStatus.equals("approved") || newStatus.equals("denied"))) {
 			userDAO.updateStatus(statusId, newStatus);

@@ -88,6 +88,7 @@ public class ReimbDAOImpl implements ReimbDAO {
 				reimb.setDescription(resultSet.getString("description"));
 				reimb.setTypeId(resultSet.getInt("type_id"));
 				reimb.setSubmitted(simpleDateFormat.format(resultSet.getTimestamp("submitted")));
+				reimb.setStatusId(resultSet.getInt("status_id"));
 				rlist.add(reimb);
 			}
 			return rlist;

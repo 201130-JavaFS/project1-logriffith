@@ -76,6 +76,7 @@ async function login() {
         let inputAmount = document.createElement("input");
         inputAmount.id = 'getamount';
         newAmount.appendChild(inputAmount);
+        document.getElementById('dollar').innerHTML = '$';
 
         let newDescription = document.getElementById('input-description');
         let inputDescription = document.createElement('input');
@@ -112,6 +113,18 @@ async function login() {
         pending.appendChild(pendingBtn);
         document.getElementById("pendingbtn").innerText = "Find Pending";
         document.getElementById("pendingbtn").addEventListener("click", findpending);
+
+        //create button for resolving requests (for managers only)
+        if (userRole === 'Manager'){
+            let update = document.getElementById('updatepend');
+            let resolve = document.createElement('button');
+            resolve.id = 'resolve-btn';
+            resolve.className = 'btn btn-danger';
+            update.appendChild(resolve);
+            document.getElementById('resolve-btn').innerText = 'Resolve Requests';
+        }else{
+            console.log("Sorry, you are not a manager.")
+        }
 
         document.getElementById("allhead").innerText = "All Reimbursements:";
         document.getElementById("userid").innerText = "EmployeeId";
@@ -328,8 +341,20 @@ async function findpending(){
                 cell5.innerHTML = r.submitted;//fills the cell
                 row.appendChild(cell5);//appends the cell
 
-                let cell6 = document.createElement("td");//create the cell
-                cell6.innerHTML = r.status;//fills the cell
+                //create options for how a manager will resolve requests
+                let cell6 = document.createElement("td");
+                let resolve = document.createElement("select");
+                let option1 = document.createElement("option");
+                option1.text = "pending";
+                resolve.appendChild(option1);
+                let option2 = document.createElement("option");
+                //resolve.setAttribute("name","status");
+                //option1.setAttribute("value","approve");
+                option2.text = "approve";
+                resolve.appendChild(option2);
+                cell6.appendChild(resolve);
+
+                //cell6.innerHTML = r.status;//fills the cell
                 row.appendChild(cell6);//appends the cell
 
                 document.getElementById("pendreimb").appendChild(row);

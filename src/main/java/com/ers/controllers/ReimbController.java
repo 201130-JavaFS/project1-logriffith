@@ -73,6 +73,10 @@ public class ReimbController {
 		response.setStatus(200);
 	}
 	
+	public void resolveRequest(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		
+	}
+	
 	public void allReimburements(HttpServletResponse response) throws IOException{
 		List<Reimbursement> allReimb = reimbService.allReimbursements();
 		String json = objectMapper.writeValueAsString(allReimb);

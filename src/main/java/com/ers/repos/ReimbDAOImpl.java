@@ -74,12 +74,13 @@ public class ReimbDAOImpl implements ReimbDAO {
 	}
 
 	@Override
-	public List<Reimbursement> allPending() {
+	public List<Reimbursement> allPending(int userId) {
 		try (Connection connection = DbConnection.getConnection()) {
 			String sql = ReimbQueries.GET_ALL_PENDING;
-			Statement statement = connection.createStatement();
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, userId);
 			List<Reimbursement> rlist = new ArrayList<>();
-			ResultSet resultSet = statement.executeQuery(sql);
+			ResultSet resultSet = preparedStatement.executeQuery();
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a z");
 			while (resultSet.next()) {
 				Reimbursement reimb = new Reimbursement();

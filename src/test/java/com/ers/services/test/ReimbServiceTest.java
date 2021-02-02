@@ -55,7 +55,7 @@ class ReimbServiceTest {
 	 
 	 @Test 
 	 void testAllPending() {
-		 assertNotNull(reimbService.allPending());
+		 assertNotNull(reimbService.allPending(5));
 	 }
 	 
 	 @Test

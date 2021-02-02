@@ -32,7 +32,7 @@ CREATE TABLE users(
 
 CREATE TABLE reimbursements(
 	reimb_id serial PRIMARY KEY,
-	amount numeric(1000,2) NOT NULL CHECK(amount>0),
+	amount numeric(7,2) NOT NULL CHECK(amount>0),
 	submitted timestamptz NOT null,
 	resolved timestamptz,
 	description varchar(250),

@@ -37,7 +37,7 @@ public class PrimaryServlet extends HttpServlet {
 				break;
 			case "allpending":
 				if(request.getSession(false) != null) {
-					reimbController.allPending(response);
+					reimbController.allPending(request,response);
 				}else {
 					response.setStatus(403);
 				}

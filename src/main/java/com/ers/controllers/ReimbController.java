@@ -64,8 +64,10 @@ public class ReimbController {
 		
 	}
 	
-	public void allPending(HttpServletResponse response) throws IOException{
-		List<Reimbursement> pendingList = reimbService.allPending();
+	public void allPending(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		HttpSession httpSession = request.getSession(false);
+		int userId = (int) httpSession.getAttribute("userId");
+		List<Reimbursement> pendingList = reimbService.allPending(userId);
 		String json = objectMapper.writeValueAsString(pendingList);
 		response.getWriter().print(json);
 		response.setStatus(200);

@@ -122,6 +122,7 @@ async function login() {
             resolve.className = 'btn btn-danger';
             update.appendChild(resolve);
             document.getElementById('resolve-btn').innerText = 'Resolve Requests';
+            document.getElementById('resolve-btn').addEventListener('click', resolveRequests);
         }else{
             console.log("Sorry, you are not a manager.")
         }
@@ -341,21 +342,26 @@ async function findpending(){
                 cell5.innerHTML = r.submitted;//fills the cell
                 row.appendChild(cell5);//appends the cell
 
-                //create options for how a manager will resolve requests
+                //create options for resolving requests (only for managers)
                 let cell6 = document.createElement("td");
                 let resolve = document.createElement("select");
+                resolve.className = "select";
+                document.get//you stopped here Lew!!!!!!!!!!!!!!!!!
+
                 let option1 = document.createElement("option");
-                option1.text = "pending";
+                option1.text = r.status;
                 resolve.appendChild(option1);
+
                 let option2 = document.createElement("option");
-                //resolve.setAttribute("name","status");
-                //option1.setAttribute("value","approve");
                 option2.text = "approve";
                 resolve.appendChild(option2);
-                cell6.appendChild(resolve);
 
-                //cell6.innerHTML = r.status;//fills the cell
-                row.appendChild(cell6);//appends the cell
+                let option3 = document.createElement("option");
+                option3.text = "deny";
+                resolve.appendChild(option3);
+
+                cell6.appendChild(resolve);
+                row.appendChild(cell6);
 
                 document.getElementById("pendreimb").appendChild(row);
             }
@@ -409,6 +415,27 @@ async function findpending(){
                 document.getElementById("pendreimb").appendChild(row);
             }
 
+        }
+    }
+}
+
+async function resolveRequests(){
+    let resolved = [];
+    let requests = document.getElementById('pendreimb').rows;
+    console.log(requests.length);
+
+    for(let i = 0; i < requests.length; i++){
+        let reimbRequest = requests[i];
+        for(let j = 0; j < reimbRequest; j++){
+            let reimbursement = {
+                userId : reimbRequest[0].innerText,
+                amount : reimbRequest[1].innerText,
+                description : reimbRequest[2].innerText,
+                type : reimbRequest[3].innerText,
+                submitted : reimbRequest[4].innerText,
+                status : reimbRequest[5].value
+            }
+            console.log(reimbursement);
         }
     }
 }

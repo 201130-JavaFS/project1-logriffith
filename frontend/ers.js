@@ -37,7 +37,7 @@ async function login() {
         let logout = document.getElementById("header");
         let logoutButton = document.createElement("button");
         logoutButton.id = "logoutbtn";
-        logoutButton.className = "btn btn-primary";
+        logoutButton.className = "btn btn-primary position-absolute";
         logout.appendChild(logoutButton);
         document.getElementById("logoutbtn").innerText = "Log Out";
         document.getElementById("logoutbtn").addEventListener("click", logoutFunc);
@@ -112,10 +112,10 @@ async function login() {
         pendingBtn.className = "btn btn-danger";
         pending.appendChild(pendingBtn);
         document.getElementById("pendingbtn").innerText = "Find Pending";
-        document.getElementById("pendingbtn").addEventListener("click", findpending);
+        document.getElementById("pendingbtn").addEventListener("click", findPending);
 
         //create button for resolving requests (for managers only)
-        if (userRole === 'Manager'){
+        if (userRole === 'Manager') {
             let update = document.getElementById('updatepend');
             let resolve = document.createElement('button');
             resolve.id = 'resolve-btn';
@@ -123,7 +123,7 @@ async function login() {
             update.appendChild(resolve);
             document.getElementById('resolve-btn').innerText = 'Resolve Requests';
             document.getElementById('resolve-btn').addEventListener('click', resolveRequests);
-        }else{
+        } else {
             console.log("Sorry, you are not a manager.")
         }
 
@@ -308,7 +308,7 @@ async function getAll() {
     }
 }
 
-async function findpending(){
+async function findPending() {
     document.getElementById("pendreimb").innerHTML = "";
     if (userRole === "Manager") {
         let pendResponse = await fetch(url + "allpending", { credentials: "include" });
@@ -316,7 +316,7 @@ async function findpending(){
 
         if (pendResponse.status === 200) {
             let all = await pendResponse.json();//get json response and store in JS object
-            //data is going to be an array because we are going to get all of the Reimbursements
+            //data is going to be an array because we are going to get all of the pending reimbursements
 
             for (let r of all) {
                 console.log(r);
@@ -346,7 +346,6 @@ async function findpending(){
                 let cell6 = document.createElement("td");
                 let resolve = document.createElement("select");
                 resolve.className = "select";
-                document.get//you stopped here Lew!!!!!!!!!!!!!!!!!
 
                 let option1 = document.createElement("option");
                 option1.text = r.status;
@@ -366,7 +365,7 @@ async function findpending(){
                 document.getElementById("pendreimb").appendChild(row);
             }
         } else {
-            console.log("status is not 200");
+            console.log("status code is not 200");
         }
 
     } else {
@@ -419,24 +418,69 @@ async function findpending(){
     }
 }
 
-async function resolveRequests(){
+async function resolveRequests() {
     let resolved = [];
-    let requests = document.getElementById('pendreimb').rows;
-    console.log(requests.length);
+    let requests = document.getElementById('pendreimb').rows;//get the body of the table
+    let selectTags = document.getElementsByClassName("select");//get all of the select tags
+    console.log("There are " + requests.length + " pending requests.");
 
-    for(let i = 0; i < requests.length; i++){
-        let reimbRequest = requests[i];
-        for(let j = 0; j < reimbRequest; j++){
+    for (let i = 0; i < requests.length; i++) {
+        let row = requests[i].cells;//get the cells from a row in the table
+        let newStatus = selectTags[i].options[selectTags[i].selectedIndex].value;//get the selected status from a select tag
+        if (newStatus != "pending") {
             let reimbursement = {
-                userId : reimbRequest[0].innerText,
-                amount : reimbRequest[1].innerText,
-                description : reimbRequest[2].innerText,
-                type : reimbRequest[3].innerText,
-                submitted : reimbRequest[4].innerText,
-                status : reimbRequest[5].value
+                userId: row[0].innerText,
+                amount: row[1].innerText,
+                description: row[2].innerText,
+                type: row[3].innerText,
+                submitted: row[4].innerText,
+                status: newStatus
             }
-            console.log(reimbursement);
+            resolved.push(reimbursement);
         }
+
+        // for(let i = 0; i < requests.length; i++){
+        //     let row = requests[i].cells;
+        //     console.log("This is a reimbursement:");
+        //     for(let j = 0; j < row.length; j++){
+        //         if(j === row.length - 1){
+        //             let options = document.getElementsByClassName("select");
+        //             let status = options[i];
+        //             console.log(status.options[status.selectedIndex].value);
+        //             console.log("------------------");
+        //         }else{
+        //         console.log(row[j].innerText);
+        //         }
+        //     }        
+        // for(let j = 0; j < 6; j++){
+        //     let reimbursement = {
+        //         userId : row[0].innerText,
+        //         amount : row[1].innerText,
+        //         description : row[2].innerText,
+        //         type : row[3].innerText,
+        //         submitted : row[4].innerText,
+        //         status : row[5].value
+        //     }
+        //     console.log(reimbursement);
+        // }
+    }
+    if (resolved.length > 0) {
+        let response = await fetch(url + "allpending/resolve", {
+            method: "PATCH",
+            body: JSON.stringify(resolved),
+            credentials: "include"
+        });
+
+        if (response.status === 200) {
+            console.log("The resolved requests are:");
+            console.log(resolved);
+            findPending();
+        }else{
+            console.log("I'm sorry. You got a " + response.status);
+        }
+
+    } else {
+        console.log("No requests were resolved.")
     }
 }
 // newAmount.className = "form-control";

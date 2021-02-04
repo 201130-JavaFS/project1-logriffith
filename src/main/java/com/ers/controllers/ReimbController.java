@@ -74,7 +74,7 @@ public class ReimbController {
 	}
 	
 	public void resolveRequest(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		
+		//to be completed
 	}
 	
 	public void allReimburements(HttpServletResponse response) throws IOException{

@@ -1,11 +1,10 @@
 const url = 'http://localhost:8080/project-1/';
 let userRole;
-
+let statusIds = [];
 
 document.getElementById("loginbtn").addEventListener("click", login);
 
 async function login() {
-    console.log("In Login Function")
     let inputtedUsername = document.getElementById("username").value;
     let inputtedPassword = document.getElementById("password").value;
 
@@ -23,10 +22,7 @@ async function login() {
         //will also require this value in order to sent the cookie back.
     });
 
-    console.log(loginResponse);
-
     if (loginResponse.status === 200) {
-        console.log("In if-statement");
         let user = await loginResponse.json();//get json response and store in JS object
         document.getElementById("login-row").innerHTML = "";//puts no content into this element
 
@@ -37,7 +33,7 @@ async function login() {
         let logout = document.getElementById("header");
         let logoutButton = document.createElement("button");
         logoutButton.id = "logoutbtn";
-        logoutButton.className = "btn btn-primary position-absolute";
+        logoutButton.className = "btn btn-primary";
         logout.appendChild(logoutButton);
         document.getElementById("logoutbtn").innerText = "Log Out";
         document.getElementById("logoutbtn").addEventListener("click", logoutFunc);
@@ -51,7 +47,6 @@ async function login() {
         let adjustPadding = document.getElementById("login-row");
         adjustPadding.id = "data";
         document.getElementById("identifyuser").innerText = userRole + ": " + user.firstName + " " + user.lastName;
-        console.log("Request Succeeded!")
 
         //modify tables/develop tables
         let newReimbTable = document.getElementById("table1");
@@ -147,7 +142,7 @@ async function login() {
 
 
     } else {
-        console.log("Request Failed :(")
+        console.log("Login Failed :(")
         let error = document.getElementById("login-row");
         let message = document.createElement("h6");
         message.id = "message";
@@ -160,6 +155,7 @@ async function logoutFunc() {
     let logoutResponse = await fetch(url + "logout", { credentials: "include" });
     if (logoutResponse.status === 200) {
         userRole = null;
+        statusIds = [];
         console.log("Logged Out Successfully");
     } else {
         console.log("Logout Failed")
@@ -195,8 +191,6 @@ async function sendReimb() {
         body: JSON.stringify(reimbursement),
         credentials: "include"
     });
-
-    console.log(response.status);
 
     if (response.status === 201) {
         //document.getElementById("newbtn").innerText = "Request Submitted";
@@ -312,7 +306,6 @@ async function findPending() {
     document.getElementById("pendreimb").innerHTML = "";
     if (userRole === "Manager") {
         let pendResponse = await fetch(url + "allpending", { credentials: "include" });
-        console.log(pendResponse.status);
 
         if (pendResponse.status === 200) {
             let all = await pendResponse.json();//get json response and store in JS object
@@ -320,6 +313,7 @@ async function findPending() {
 
             for (let r of all) {
                 console.log(r);
+                statusIds.push(r.statusId);
                 let row = document.createElement("tr");
 
                 let cell1 = document.createElement("td");//create the cell
@@ -364,6 +358,7 @@ async function findPending() {
 
                 document.getElementById("pendreimb").appendChild(row);
             }
+            console.log("The status IDs are: " + statusIds);
         } else {
             console.log("status code is not 200");
         }
@@ -413,31 +408,38 @@ async function findPending() {
 
                 document.getElementById("pendreimb").appendChild(row);
             }
-
         }
     }
 }
 
 async function resolveRequests() {
     let resolved = [];
+    let statusArray = [];//needed to encapsulate status and statusId in front end; should have done this in the back end at the beginning
     let requests = document.getElementById('pendreimb').rows;//get the body of the table
     let selectTags = document.getElementsByClassName("select");//get all of the select tags
     console.log("There are " + requests.length + " pending requests.");
 
     for (let i = 0; i < requests.length; i++) {
-        let row = requests[i].cells;//get the cells from a row in the table
-        let newStatus = selectTags[i].options[selectTags[i].selectedIndex].value;//get the selected status from a select tag
-        if (newStatus != "pending") {
-            let reimbursement = {
-                userId: row[0].innerText,
-                amount: row[1].innerText,
-                description: row[2].innerText,
-                type: row[3].innerText,
-                submitted: row[4].innerText,
-                status: newStatus
-            }
-            resolved.push(reimbursement);
-        }
+        //let row = requests[i].cells;//get the cells from a row in the table
+        let statusName = selectTags[i].options[selectTags[i].selectedIndex].value;//get the selected status from a select tag
+        let status = {
+            statusId : statusIds[i],
+            statusType: statusName
+        };
+        statusArray.push(status);
+    }//Lew you stopped here.
+    console.log(statusArray);
+        // if (statusArray[i].statusType != "pending") {
+        //     // let status = {
+        //     //     userId: row[0].innerText,
+        //     //     amount: row[1].innerText,
+        //     //     description: row[2].innerText,
+        //     //     type: row[3].innerText,
+        //     //     submitted: row[4].innerText,
+        //     //     status: statusName
+        //     // }
+        //     resolved.push(statusArray[i]);
+        // }
 
         // for(let i = 0; i < requests.length; i++){
         //     let row = requests[i].cells;
@@ -463,24 +465,24 @@ async function resolveRequests() {
         //     }
         //     console.log(reimbursement);
         // }
-    }
-    if (resolved.length > 0) {
-        let response = await fetch(url + "allpending/resolve", {
-            method: "PATCH",
-            body: JSON.stringify(resolved),
-            credentials: "include"
-        });
+    console.log(resolved);
+    // if (resolved.length > 0) {
+    //     let response = await fetch(url + "allpending/resolve", {
+    //         method: "PATCH",
+    //         body: JSON.stringify(resolved),
+    //         credentials: "include"
+    //     });
 
-        if (response.status === 200) {
-            console.log("The resolved requests are:");
-            console.log(resolved);
-            findPending();
-        }else{
-            console.log("I'm sorry. You got a " + response.status);
-        }
+    //     if (response.status === 200) {
+    //         console.log("The resolved requests are:");
+    //         console.log(resolved);
+    //         findPending();
+    //     }else{
+    //         console.log("I'm sorry. You got a " + response.status);
+    //     }
 
-    } else {
-        console.log("No requests were resolved.")
-    }
+    // } else {
+    //     console.log("No requests were resolved.")
+    // }
 }
 // newAmount.className = "form-control";

@@ -1,6 +1,6 @@
 const url = 'http://localhost:8080/project-1/';
 let userRole;
-let statusIds = [];
+let pendingStatus = [];
 
 document.getElementById("loginbtn").addEventListener("click", login);
 
@@ -155,7 +155,7 @@ async function logoutFunc() {
     let logoutResponse = await fetch(url + "logout", { credentials: "include" });
     if (logoutResponse.status === 200) {
         userRole = null;
-        statusIds = [];
+        pendingStatus = [];
         console.log("Logged Out Successfully");
     } else {
         console.log("Logout Failed")
@@ -184,6 +184,7 @@ async function sendReimb() {
         type: newType
     }
 
+    console.log("New Reimbursement Request:");
     console.log(reimbursement);
 
     let response = await fetch(url + "new", {
@@ -310,10 +311,20 @@ async function findPending() {
         if (pendResponse.status === 200) {
             let all = await pendResponse.json();//get json response and store in JS object
             //data is going to be an array because we are going to get all of the pending reimbursements
+            console.log("All Pending Reimbursement Requests (Other Than Logged in Manager):");
 
             for (let r of all) {
                 console.log(r);
-                statusIds.push(r.statusId);
+
+                //need to encapsulate status and statusId in front end; should have done this in the back end in the models at the beginning
+                let status = {
+                    statusId: r.statusId,
+                    statusType: r.status
+                };
+
+                pendingStatus.push(status);//add status object to array
+                //note at this point all the status types should show as "pending"
+
                 let row = document.createElement("tr");
 
                 let cell1 = document.createElement("td");//create the cell
@@ -358,11 +369,12 @@ async function findPending() {
 
                 document.getElementById("pendreimb").appendChild(row);
             }
-            console.log("The status IDs are: " + statusIds);
+            console.log("pendingStatus array:");
+            console.log(pendingStatus);
         } else {
             console.log("status code is not 200");
         }
-
+        //If the user is not a manager, then they are a regular employee and cannot resolve pending reimbursement requests
     } else {
         // let allResponse = await fetch(url + "allforuser", { credentials: "include" });
         // console.log(allResponse.status);
@@ -376,7 +388,7 @@ async function findPending() {
         if (pendResponse.status === 200) {
             let all = await pendResponse.json();//get json response and store in JS object
             //data is going to be an array because we are going to get all of the Reimbursements
-            console.log(all);
+            console.log("All User Pending Requests:");
 
             for (let r of all) {
                 console.log(r);
@@ -414,7 +426,7 @@ async function findPending() {
 
 async function resolveRequests() {
     let resolved = [];
-    let statusArray = [];//needed to encapsulate status and statusId in front end; should have done this in the back end at the beginning
+    //let statusArray = [];//needed to encapsulate status and statusId in front end; should have done this in the back end at the beginning
     let requests = document.getElementById('pendreimb').rows;//get the body of the table
     let selectTags = document.getElementsByClassName("select");//get all of the select tags
     console.log("There are " + requests.length + " pending requests.");
@@ -422,24 +434,23 @@ async function resolveRequests() {
     for (let i = 0; i < requests.length; i++) {
         //let row = requests[i].cells;//get the cells from a row in the table
         let statusName = selectTags[i].options[selectTags[i].selectedIndex].value;//get the selected status from a select tag
-        let status = {
-            statusId : statusIds[i],
-            statusType: statusName
-        };
-        statusArray.push(status);
-    }//Lew you stopped here.
-    console.log(statusArray);
-        // if (statusArray[i].statusType != "pending") {
-        //     // let status = {
-        //     //     userId: row[0].innerText,
-        //     //     amount: row[1].innerText,
-        //     //     description: row[2].innerText,
-        //     //     type: row[3].innerText,
-        //     //     submitted: row[4].innerText,
-        //     //     status: statusName
-        //     // }
-        //     resolved.push(statusArray[i]);
-        // }
+        if(statusName === "deny"){
+            let status = {
+                statusId: pendingStatus[i].statusId,
+                statusType: "denied"
+            };
+            resolved.push(status);
+        }else if(statusName === "approve"){
+            let status = {
+                statusId: pendingStatus[i].statusId,
+                statusType: "approved"
+            };
+            resolved.push(status);
+        }
+        else{
+            console.log("pending request was not resolved.");
+        }
+    }
 
         // for(let i = 0; i < requests.length; i++){
         //     let row = requests[i].cells;
@@ -454,35 +465,26 @@ async function resolveRequests() {
         //         console.log(row[j].innerText);
         //         }
         //     }        
-        // for(let j = 0; j < 6; j++){
-        //     let reimbursement = {
-        //         userId : row[0].innerText,
-        //         amount : row[1].innerText,
-        //         description : row[2].innerText,
-        //         type : row[3].innerText,
-        //         submitted : row[4].innerText,
-        //         status : row[5].value
-        //     }
-        //     console.log(reimbursement);
-        // }
+        
+    console.log("Requests to be Resolved:");
     console.log(resolved);
-    // if (resolved.length > 0) {
-    //     let response = await fetch(url + "allpending/resolve", {
-    //         method: "PATCH",
-    //         body: JSON.stringify(resolved),
-    //         credentials: "include"
-    //     });
+    
+    if (resolved.length > 0) {
+        let response = await fetch(url + "allpending/resolve", {
+            method: "PATCH",
+            body: JSON.stringify(resolved),
+            credentials: "include"
+        });
 
-    //     if (response.status === 200) {
-    //         console.log("The resolved requests are:");
-    //         console.log(resolved);
-    //         findPending();
-    //     }else{
-    //         console.log("I'm sorry. You got a " + response.status);
-    //     }
+        if (response.status === 200) {
+            console.log("The resolved requests are:");
+            console.log(resolved);
+            findPending();
+        }else{
+            console.log("I'm sorry. You got a " + response.status);
+        }
 
-    // } else {
-    //     console.log("No requests were resolved.")
-    // }
+    } else {
+        console.log("No requests were resolved because the manager did not change the status.")
+    }
 }
-// newAmount.className = "form-control";

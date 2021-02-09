@@ -35,6 +35,3 @@ VALUES (250.25, '2020-12-12 20:25:11', null, 'hotel expenses for story in Gotham
 (122.95, '2020-12-12 21:05:11', null, 'I have my reasons', 5, 5, 5),
 (259.45, '2020-12-12 21:15:11', null, 'I was hungry, dont judge me', 6, 6, 6);
 
---SELECT max(status_id) FROM reimbursement_status;
-
---SELECT now();--current time

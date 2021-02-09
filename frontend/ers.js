@@ -79,8 +79,25 @@ async function login() {
         newDescription.appendChild(inputDescription);
 
         let newType = document.getElementById("input-type");
-        let inputType = document.createElement('input');
+        let inputType = document.createElement('select');
         inputType.id = "get-type";
+
+        let option1 = document.createElement("option");
+        option1.text = "food";
+        inputType.append(option1);
+
+        let option2 = document.createElement("option");
+        option2.text = "lodging";
+        inputType.append(option2);
+
+        let option3 = document.createElement("option");
+        option3.text = "travel";
+        inputType.append(option3);
+
+        let option4 = document.createElement("option");
+        option4.text = "other";
+        inputType.append(option4);
+
         newType.appendChild(inputType);
 
         //create new reimbursement button
@@ -157,6 +174,17 @@ async function logoutFunc() {
         userRole = null;
         pendingStatus = [];
         console.log("Logged Out Successfully");
+
+        //Clear Page
+        let pageContent = document.getElementById("fullcontainer");
+        let logoutButton = document.getElementById("header");
+        pageContent.innerHTML = "";
+        logoutButton.innerHTML = "";
+
+        //Back to Login/Reload the page
+        pageContent.innerHTML = "<div class='row' id='login-row'> <h4 class='col-lg-12' id='enter'>Please Enter Your Username and Password:</h4> <input class='col-sm-12 form-control' id='username' type='text' placeholder='USERNAME'> <input class='col-sm-12 form-control' id='password' type='password' placeholder='PASSWORD'> <br> <br> <button id='loginbtn' class='btn btn-danger'>Login</button> </div> <div id='user'></div> <br><br><br><br> <div class='row' id='newreimb-row'><h4 class='col-lg-12' id='newhead'></h4><table id='table1'> <thead> <tr> <th id='newamount'></th> <th id='newdescription'></th> <th id='newtype'></th></tr> </thead> <tbody id='newreimb'> <tr id='newreimbinfo'> <td id='input-amount'> <span id ='dollar'></span> </td> <td id='input-description'> </td> <td id='input-type'> </td> </tr> </tbody> </table> <div id='sendreimb'></div> </div> <br><br> <div class='row' id='pend-row'> <h4 class='col-lg-12' id='pendhead'></h4> <div id='getpending'></div> <table id='table2'> <thead> <tr> <th id='penduserid'></th> <th id='pendamount'></th> <th id='penddescription'></th> <th id='pendtype'></th> <th id='pendsubmit'></th> <th id='pendstatus'></th> </tr> </thead> <tbody id='pendreimb'></tbody> </table> <div id='findpend'></div> <div id='updatepend'></div> </div> <br><br> <div class='row' id='allreimb-row'> <h4 class='col-lg-12' id='allhead'></h4> <table id='table3'> <thead><tr> <th id='userid'></th><th id='amount'></th><th id='description'></th><th id='type'></th> <th id='submitted'></th> <th id='resolved'></th> <th id='status'></th> </tr></thead> <tbody id='allreimb'></tbody> </table> <div id='getall'></div> </div>";
+        document.getElementById("loginbtn").addEventListener("click", login);
+        
     } else {
         console.log("Logout Failed")
     }
@@ -173,9 +201,9 @@ async function sendReimb() {
     newDescript.type = "text";
     let newType = document.getElementById("get-type").value;
     newType.className = "col-sm-4 form-control";
-    newType.type = "text";
+    //newType.type = "text";
 
-    newAmount = Number(newAmount);
+    newAmount = Number(newAmount).toFixed(2);
     console.log(newAmount);
 
     let reimbursement = {
@@ -254,7 +282,7 @@ async function getAll() {
         // let allResponse = await fetch(url + "allforuser", { credentials: "include" });
         // console.log(allResponse.status);
 
-        let allResponse = await fetch(url + "allforuser", {
+        let allResponse = await fetch(url + "all/employee", {
             method: "POST",
             body: JSON.stringify(""),
             credentials: "include"
@@ -306,7 +334,8 @@ async function getAll() {
 async function findPending() {
     document.getElementById("pendreimb").innerHTML = "";
     if (userRole === "Manager") {
-        let pendResponse = await fetch(url + "allpending", { credentials: "include" });
+        pendingStatus = [];
+        let pendResponse = await fetch(url + "pending/manager", { credentials: "include" });
 
         if (pendResponse.status === 200) {
             let all = await pendResponse.json();//get json response and store in JS object
@@ -350,7 +379,7 @@ async function findPending() {
                 //create options for resolving requests (only for managers)
                 let cell6 = document.createElement("td");
                 let resolve = document.createElement("select");
-                resolve.className = "select";
+                resolve.className = "status-options";
 
                 let option1 = document.createElement("option");
                 option1.text = r.status;
@@ -379,7 +408,7 @@ async function findPending() {
         // let allResponse = await fetch(url + "allforuser", { credentials: "include" });
         // console.log(allResponse.status);
 
-        let pendResponse = await fetch(url + "userpending", {
+        let pendResponse = await fetch(url + "pending/employee", {
             method: "POST",
             body: JSON.stringify(""),
             credentials: "include"
@@ -428,7 +457,7 @@ async function resolveRequests() {
     let resolved = [];
     //let statusArray = [];//needed to encapsulate status and statusId in front end; should have done this in the back end at the beginning
     let requests = document.getElementById('pendreimb').rows;//get the body of the table
-    let selectTags = document.getElementsByClassName("select");//get all of the select tags
+    let selectTags = document.getElementsByClassName("status-options");//get all of the select tags
     console.log("There are " + requests.length + " pending requests.");
 
     for (let i = 0; i < requests.length; i++) {
@@ -465,13 +494,10 @@ async function resolveRequests() {
         //         console.log(row[j].innerText);
         //         }
         //     }        
-        
-    console.log("Requests to be Resolved:");
-    console.log(resolved);
-    
+            
     if (resolved.length > 0) {
-        let response = await fetch(url + "allpending/resolve", {
-            method: "PATCH",
+        let response = await fetch(url + "pending/manager/resolve", {
+            method: "PUT",
             body: JSON.stringify(resolved),
             credentials: "include"
         });
@@ -482,6 +508,7 @@ async function resolveRequests() {
             findPending();
         }else{
             console.log("I'm sorry. You got a " + response.status);
+            console.log(response);
         }
 
     } else {

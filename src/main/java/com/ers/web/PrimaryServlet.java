@@ -15,6 +15,11 @@ import com.ers.controllers.ReimbController;
 
 public class PrimaryServlet extends HttpServlet {
 	
+	/**
+	 * Default serial ID for this servlet.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = LogManager.getLogger(PrimaryServlet.class); 
 
 	private LoginController loginController = new LoginController();
@@ -35,14 +40,21 @@ public class PrimaryServlet extends HttpServlet {
 					response.setStatus(403);
 				}
 				break;
-			case "allpending":
+			case "pending/manager":
 				if(request.getSession(false) != null) {
 					reimbController.allPending(request,response);
 				}else {
 					response.setStatus(403);
 				}
 				break;
-			case "userpending":
+			case "pending/manager/resolve":
+				if(request.getSession(false) != null) {
+					reimbController.resolveRequest(request, response);
+				}else {
+					response.setStatus(403);
+				}
+				break;
+			case "pending/employee":
 				if(request.getSession(false) != null) {
 					reimbController.allPendingForUser(request, response);
 				}else {
@@ -56,7 +68,7 @@ public class PrimaryServlet extends HttpServlet {
 					response.setStatus(403);
 				}
 				break;
-			case "allforuser":
+			case "all/employee":
 				if(request.getSession(false) != null) {
 					reimbController.allReimbursementsForUser(request, response);
 				}else {
@@ -73,6 +85,11 @@ public class PrimaryServlet extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		response.setContentType("application/json");
+		doGet(request,response);
+	}
+	
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		response.setContentType("application/json");
 		doGet(request,response);
 	}

@@ -4,24 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.naming.spi.DirStateFactory.Result;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.ers.models.Reimbursement;
 import com.ers.models.User;
 import com.ers.utils.DbConnection;
 import com.ers.utils.ReimbQueries;
 
 public class UserDAOImpl implements UserDAO {
 	
-	//public static Logger log = Logger.getLogger(UserDAOImpl.class);
 	private static final Logger log = LogManager.getLogger(UserDAOImpl.class); 
 
 	@Override
@@ -34,8 +26,6 @@ public class UserDAOImpl implements UserDAO {
 			preparedStatement.setString(2, password);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
-				//log.info("found user: " + username);		
-				//log.trace("found user: " + username);//remove this later
 				user = new User(resultSet.getInt("user_id"), resultSet.getString("username"), resultSet.getString("us_password"),
 						resultSet.getString("first_name"), resultSet.getString("last_name"), resultSet.getString("email"), resultSet.getString("us_role"));
 			}

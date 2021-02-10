@@ -24,7 +24,6 @@ class UserServiceTest {
 		User user = userService.login("testmanager", "manager");
 		User manager = new User(4, "Tom", "Smith", null, "Manager");
 		assertEquals(manager, user);
-		// ('testmanager', 'манаждс', 'Tom', 'Smith', 'manager@yahoo.com', 4),
 	}
 
 	@Test
@@ -46,17 +45,13 @@ class UserServiceTest {
 	}
 	
 	@Test
-	void testTimeResolved() {
-		assertTrue(userService.timeResolved(4));
+	void testResolve() {
+		assertTrue(userService.resolve(4,"denied"));
 	}
 	
-	@Test
-	void testChangeStatus() {
-		assertTrue(userService.changeStatus(5, "denied"));
-	}
 	
-	@Test void testChangeStatusFailed(){
-		assertFalse(userService.changeStatus(5, "unauthorized status"));
+	@Test void testResolveFail(){
+		assertFalse(userService.resolve(5, "unauthorized status"));
 	}
 
 }

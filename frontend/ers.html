@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Reimbursement System</title>
+    <title>ERS</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
@@ -17,11 +17,6 @@
             width: 35%;
             padding: 200px 0px;
         }
-
-        /* #newreimbtable{
-            table-layout: auto;
-            width: 1400px;
-        } */
 
         #table1,
         #table2,
@@ -79,6 +74,12 @@
         #dollar{
             font-weight: bold;
         }
+
+        #amount-message{
+            position: relative;
+            left: 340px;
+            color: red;
+        }
     </style>
 </head>
 
@@ -116,18 +117,16 @@
                     <tr id="newreimbinfo">
                         <td id='input-amount'>
                             <span id ='dollar'></span>
-                          <!--<input id="getamount"> -->
                         </td>
                         <td id='input-description'>
-                            <!--<input id="getdescript">-->
                         </td>
                         <td id='input-type'>
-                            <!--<input id="get-type">-->
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div id="sendreimb"></div>
+            <h6 id = "amount-message"></h6>
         </div>
         <br>
         <br>

@@ -59,13 +59,10 @@ public class ReimbDAOImpl implements ReimbDAO {
 			String sql = ReimbQueries.NEW_REIMBURSEMENT;
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setDouble(1, reimbursement.getAmount());
-//			preparedStatement.setTimestamp(2, new java.sql.Timestamp(reimbursement.getSubmitted().getTime()));
-//			preparedStatement.setNull(3, Types.TIMESTAMP_WITH_TIMEZONE);
 			preparedStatement.setString(2, reimbursement.getDescription());
 			preparedStatement.setInt(3, reimbursement.getUserId());
 			preparedStatement.executeUpdate();
 			reimbAdded = true;
-			// Chris said that this would work too: preparedStatement.setTimestamp(3,Timestamp.valueOf(LocalDateTime.now()))
 		} catch (ClassNotFoundException | SQLException e) {
 			log.fatal(e);
 			e.getMessage();
@@ -204,20 +201,7 @@ public class ReimbDAOImpl implements ReimbDAO {
 		}
 		return null;
 	}
-	
-//	public static void main(String[] args) {
-//		ReimbDAO r = new ReimbDAOImpl();
-//		List<Reimbursement> rem= r.allPendingById(2000);
-//		if (rem == null) {
-//			System.out.println("its null");
-//		}else {
-//			System.out.println("Something when wrong. There isn't a user with id 2000");
-//
-//		}
-//		for (Reimbursement R : rem) {
-//			System.out.println(R);
-//		}
-//	}
-	
-
 }
+//preparedStatement.setTimestamp(2, new java.sql.Timestamp(reimbursement.getSubmitted().getTime()));
+//preparedStatement.setNull(3, Types.TIMESTAMP_WITH_TIMEZONE);
+// Chris said that this would work too: preparedStatement.setTimestamp(3,Timestamp.valueOf(LocalDateTime.now()))

@@ -39,7 +39,6 @@ public class LoginController {
 			if(user != null) {
 				HttpSession httpSession = request.getSession();//returns the current session or creates one if it doesn't exist
 
-				//user.setPassword(null);
 				String json = objectMapper.writeValueAsString(user);//converts the user into a JSON String 
 				response.getWriter().print(json);
 				
@@ -60,7 +59,7 @@ public class LoginController {
 
 			}
 		}else {
-			log.error("Wrong method was used.");
+			log.error("Wrong HTTP method was used. Status Code: 405");
 		}
 		
 	}
@@ -71,6 +70,8 @@ public class LoginController {
 			session.invalidate(); //deletes the session/logs them out
 			response.setStatus(200);
 			response.getWriter().print("Logged Out");
+		}else {
+			log.warn("Cannot invalidate a session that doesn't exist. Status Code: 500.");
 		}
 		
 	}

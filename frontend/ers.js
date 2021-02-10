@@ -26,7 +26,6 @@ async function login() {
         let user = await loginResponse.json();//get json response and store in JS object
         document.getElementById("login-row").innerHTML = "";//puts no content into this element
 
-        console.log(user);
         userRole = user.role;
 
         //create logout button
@@ -70,12 +69,14 @@ async function login() {
         let newAmount = document.getElementById("input-amount");
         let inputAmount = document.createElement("input");
         inputAmount.id = 'getamount';
+        newAmount.type = "text";
         newAmount.appendChild(inputAmount);
         document.getElementById('dollar').innerHTML = '$';
 
         let newDescription = document.getElementById('input-description');
         let inputDescription = document.createElement('input');
         inputDescription.id = 'getdescript';
+        inputDescription.type = "text";
         newDescription.appendChild(inputDescription);
 
         let newType = document.getElementById("input-type");
@@ -172,7 +173,7 @@ async function logoutFunc() {
     let logoutResponse = await fetch(url + "logout", { credentials: "include" });
     if (logoutResponse.status === 200) {
         userRole = null;
-        pendingStatus = [];
+        pendingStatus = [];//empty pending status array just in case it is nonempty
         console.log("Logged Out Successfully");
 
         //Clear Page
@@ -181,57 +182,86 @@ async function logoutFunc() {
         pageContent.innerHTML = "";
         logoutButton.innerHTML = "";
 
-        //Back to Login/Reload the page
-        pageContent.innerHTML = "<div class='row' id='login-row'> <h4 class='col-lg-12' id='enter'>Please Enter Your Username and Password:</h4> <input class='col-sm-12 form-control' id='username' type='text' placeholder='USERNAME'> <input class='col-sm-12 form-control' id='password' type='password' placeholder='PASSWORD'> <br> <br> <button id='loginbtn' class='btn btn-danger'>Login</button> </div> <div id='user'></div> <br><br><br><br> <div class='row' id='newreimb-row'><h4 class='col-lg-12' id='newhead'></h4><table id='table1'> <thead> <tr> <th id='newamount'></th> <th id='newdescription'></th> <th id='newtype'></th></tr> </thead> <tbody id='newreimb'> <tr id='newreimbinfo'> <td id='input-amount'> <span id ='dollar'></span> </td> <td id='input-description'> </td> <td id='input-type'> </td> </tr> </tbody> </table> <div id='sendreimb'></div> </div> <br><br> <div class='row' id='pend-row'> <h4 class='col-lg-12' id='pendhead'></h4> <div id='getpending'></div> <table id='table2'> <thead> <tr> <th id='penduserid'></th> <th id='pendamount'></th> <th id='penddescription'></th> <th id='pendtype'></th> <th id='pendsubmit'></th> <th id='pendstatus'></th> </tr> </thead> <tbody id='pendreimb'></tbody> </table> <div id='findpend'></div> <div id='updatepend'></div> </div> <br><br> <div class='row' id='allreimb-row'> <h4 class='col-lg-12' id='allhead'></h4> <table id='table3'> <thead><tr> <th id='userid'></th><th id='amount'></th><th id='description'></th><th id='type'></th> <th id='submitted'></th> <th id='resolved'></th> <th id='status'></th> </tr></thead> <tbody id='allreimb'></tbody> </table> <div id='getall'></div> </div>";
+        //Back to Login/Rebuild the Page
+        pageContent.innerHTML = "<div class='row' id='login-row'> <h4 class='col-lg-12' id='enter'>Please Enter Your Username and Password:</h4> <input class='col-sm-12 form-control' id='username' type='text' placeholder='USERNAME'> <input class='col-sm-12 form-control' id='password' type='password' placeholder='PASSWORD'> <br> <br> <button id='loginbtn' class='btn btn-danger'>Login</button> </div> <div id='user'></div> <br><br><br><br> <div class='row' id='newreimb-row'><h4 class='col-lg-12' id='newhead'></h4><table id='table1'> <thead> <tr> <th id='newamount'></th> <th id='newdescription'></th> <th id='newtype'></th></tr> </thead> <tbody id='newreimb'> <tr id='newreimbinfo'> <td id='input-amount'> <span id ='dollar'></span> </td> <td id='input-description'> </td> <td id='input-type'> </td> </tr> </tbody> </table> <div id='sendreimb'></div> <h6 id='amount-message'></h6> </div> <br><br> <div class='row' id='pend-row'> <h4 class='col-lg-12' id='pendhead'></h4> <div id='getpending'></div> <table id='table2'> <thead> <tr> <th id='penduserid'></th> <th id='pendamount'></th> <th id='penddescription'></th> <th id='pendtype'></th> <th id='pendsubmit'></th> <th id='pendstatus'></th> </tr> </thead> <tbody id='pendreimb'></tbody> </table> <div id='findpend'></div> <div id='updatepend'></div> </div> <br><br> <div class='row' id='allreimb-row'> <h4 class='col-lg-12' id='allhead'></h4> <table id='table3'> <thead><tr> <th id='userid'></th><th id='amount'></th><th id='description'></th><th id='type'></th> <th id='submitted'></th> <th id='resolved'></th> <th id='status'></th> </tr></thead> <tbody id='allreimb'></tbody> </table> <div id='getall'></div> </div>";
         document.getElementById("loginbtn").addEventListener("click", login);
-        
+
     } else {
-        console.log("Logout Failed")
+        console.log("Logout Failed. The status code is " + logoutResponse.status);
     }
 };
 
 async function sendReimb() {
-    console.log("Making new Reimbursement Request");
+    console.log("Making new Reimbursement Request:");
 
-    let newAmount = document.getElementById("getamount").value;
-    newAmount.className = "col-sm-4 form-control";
-    newAmount.type = "text";
+    document.getElementById("amount-message").innerText = "";//wipe out the message if it exists
+
+    let newAmount = document.getElementById("getamount");
     let newDescript = document.getElementById("getdescript").value;
-    newDescript.className = "col-sm-4 form-control";
-    newDescript.type = "text";
     let newType = document.getElementById("get-type").value;
-    newType.className = "col-sm-4 form-control";
-    //newType.type = "text";
+    
+    //use regex to confirm that inputted amount is in the correct form
+    const currency = /^[^ ][0-9]{0,}(\.[0-9]{1,2})?$/;//no empty characters or spaces and a number of the form x---x.xx, where the .xx is optional
 
-    newAmount = Number(newAmount).toFixed(2);
-    console.log(newAmount);
+    if (currency.test(newAmount.value) && Number(newAmount.value) > 0 && !isNaN(Number(newAmount.value))) {
 
-    let reimbursement = {
-        amount: newAmount,
-        description: newDescript,
-        type: newType
-    }
+        newAmount = Number(newAmount.value);
+        console.log(newAmount);
 
-    console.log("New Reimbursement Request:");
-    console.log(reimbursement);
+        let reimbursement = {
+            amount: newAmount,
+            description: newDescript,
+            type: newType
+        };
 
-    let response = await fetch(url + "new", {
-        method: "POST",
-        body: JSON.stringify(reimbursement),
-        credentials: "include"
-    });
+        let response = await fetch(url + "new", {
+            method: "POST",
+            body: JSON.stringify(reimbursement),
+            credentials: "include"
+        });
 
-    if (response.status === 201) {
-        //document.getElementById("newbtn").innerText = "Request Submitted";
-        console.log("Reimbursement recorded");
+        if (response.status === 201) {
+            console.log("Reimbursement recorded:");
+            console.log(reimbursement);
+            document.getElementById("getamount").value = "";//clear out the amount
+            document.getElementById("getdescript").value = "";//clear out the description
+
+        } else {
+            document.getElementById("amount-message").innerText = "Reimbursement Request Couldn't be Sent";
+
+            document.getElementById("getdescript").value = "";//clear out the description
+
+            //without this the input for the amount does weird things
+            let newAmount = document.getElementById("input-amount");
+            newAmount.innerHTML = "";
+            let dollarSign = document.createElement('span');
+            dollarSign.id = 'dollar';
+            dollarSign.innerHTML = '$';
+            newAmount.appendChild(dollarSign);
+        }
+
     } else {
-        document.getElementById("newbtn").innerText = "Reimbursement Request Couldn't be Sent";
+        let message = document.getElementById("amount-message");
+        message.innerText = "Please Enter a Valid Amount";
+
+        //without this the input for the amount does weird things
+        let newAmount = document.getElementById("input-amount");
+        newAmount.innerHTML = "";
+        let dollarSign = document.createElement('span');
+        dollarSign.id = 'dollar';
+        dollarSign.innerHTML = '$';
+        newAmount.appendChild(dollarSign);
+
+        let inputAmount = document.createElement("input");
+        inputAmount.id = 'getamount';
+        newAmount.appendChild(inputAmount);
+        console.log(newAmount.value + " is not a valid reimbursement amount.");
     }
 }
 
 async function getAll() {
     console.log("In get all Reimbursements");
-    document.getElementById("allreimb").innerHTML = "";
+    document.getElementById("allreimb").innerHTML = "";//empty table just in case it is nonempty
     if (userRole === "Manager") {
         let allResponse = await fetch(url + "all", { credentials: "include" });
         console.log(allResponse.status);
@@ -279,8 +309,6 @@ async function getAll() {
         }
 
     } else {
-        // let allResponse = await fetch(url + "allforuser", { credentials: "include" });
-        // console.log(allResponse.status);
 
         let allResponse = await fetch(url + "all/employee", {
             method: "POST",
@@ -332,7 +360,7 @@ async function getAll() {
 }
 
 async function findPending() {
-    document.getElementById("pendreimb").innerHTML = "";
+    document.getElementById("pendreimb").innerHTML = "";//empty table just in case it is nonempty
     if (userRole === "Manager") {
         pendingStatus = [];
         let pendResponse = await fetch(url + "pending/manager", { credentials: "include" });
@@ -405,8 +433,6 @@ async function findPending() {
         }
         //If the user is not a manager, then they are a regular employee and cannot resolve pending reimbursement requests
     } else {
-        // let allResponse = await fetch(url + "allforuser", { credentials: "include" });
-        // console.log(allResponse.status);
 
         let pendResponse = await fetch(url + "pending/employee", {
             method: "POST",
@@ -455,46 +481,30 @@ async function findPending() {
 
 async function resolveRequests() {
     let resolved = [];
-    //let statusArray = [];//needed to encapsulate status and statusId in front end; should have done this in the back end at the beginning
     let requests = document.getElementById('pendreimb').rows;//get the body of the table
     let selectTags = document.getElementsByClassName("status-options");//get all of the select tags
     console.log("There are " + requests.length + " pending requests.");
 
     for (let i = 0; i < requests.length; i++) {
-        //let row = requests[i].cells;//get the cells from a row in the table
         let statusName = selectTags[i].options[selectTags[i].selectedIndex].value;//get the selected status from a select tag
-        if(statusName === "deny"){
+        if (statusName === "deny") {
             let status = {
                 statusId: pendingStatus[i].statusId,
                 statusType: "denied"
             };
             resolved.push(status);
-        }else if(statusName === "approve"){
+        } else if (statusName === "approve") {
             let status = {
                 statusId: pendingStatus[i].statusId,
                 statusType: "approved"
             };
             resolved.push(status);
         }
-        else{
+        else {
             console.log("pending request was not resolved.");
         }
-    }
+    }       
 
-        // for(let i = 0; i < requests.length; i++){
-        //     let row = requests[i].cells;
-        //     console.log("This is a reimbursement:");
-        //     for(let j = 0; j < row.length; j++){
-        //         if(j === row.length - 1){
-        //             let options = document.getElementsByClassName("select");
-        //             let status = options[i];
-        //             console.log(status.options[status.selectedIndex].value);
-        //             console.log("------------------");
-        //         }else{
-        //         console.log(row[j].innerText);
-        //         }
-        //     }        
-            
     if (resolved.length > 0) {
         let response = await fetch(url + "pending/manager/resolve", {
             method: "PUT",
@@ -506,7 +516,7 @@ async function resolveRequests() {
             console.log("The resolved requests are:");
             console.log(resolved);
             findPending();
-        }else{
+        } else {
             console.log("I'm sorry. You got a " + response.status);
             console.log(response);
         }

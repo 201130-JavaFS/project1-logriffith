@@ -35,7 +35,3 @@ public class ReimbQueries {
 	public static final String UPDATE_RESOLVED_DATE = "UPDATE reimbursements SET resolved = (SELECT now()) WHERE status_id = ?";
 	
 }
-
-//"SELECT user_id,amount,description,type_id,submitted,reimbursements.status_id FROM reimbursements "
-//+ "INNER JOIN reimbursement_status ON reimbursements.status_id = reimbursement_status.status_id "
-//+ "WHERE status IS NULL";

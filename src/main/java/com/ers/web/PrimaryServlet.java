@@ -78,9 +78,6 @@ public class PrimaryServlet extends HttpServlet {
 			case "logout":
 				loginController.logout(request,response);
 				break;
-			default:
-				//log.warn("Default case in switch statement was activated.");
-				break;
 		}
 	}
 	

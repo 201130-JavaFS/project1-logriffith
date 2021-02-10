@@ -14,3 +14,10 @@
 2021-02-01 12:56:09 WARN  PrimaryServlet:70 - Default case in switch statement was activated.
 2021-02-01 15:07:46 WARN  PrimaryServlet:70 - Default case in switch statement was activated.
 2021-02-02 09:51:33 WARN  PrimaryServlet:70 - Default case in switch statement was activated.
+2021-02-09 17:20:24 FATAL ReimbDAOImpl:70 - org.postgresql.util.PSQLException: ERROR: new row for relation "reimbursements" violates check constraint "reimbursements_amount_check"
+  Detail: Failing row contains (27, 0.00, 2021-02-09 17:20:24.242562-07, null, please work properly, 6, 29, 28).
+2021-02-09 17:20:24 WARN  ReimbController:55 - Request couldn't be inserted into DB. Status Code: 409
+2021-02-09 17:22:21 FATAL ReimbDAOImpl:70 - org.postgresql.util.PSQLException: ERROR: new row for relation "reimbursements" violates check constraint "reimbursements_amount_check"
+  Detail: Failing row contains (28, 0.00, 2021-02-09 17:22:21.582974-07, null, Please work, 6, 30, 29).
+2021-02-09 17:22:21 WARN  ReimbController:55 - Request couldn't be inserted into DB. Status Code: 409
+2021-02-09 17:39:30 WARN  LoginController:59 - The user doesn't match those credentials, Status Code: 401

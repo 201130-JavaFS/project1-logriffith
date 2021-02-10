@@ -45,17 +45,16 @@ public class ReimbController {
 					userId, newReimbDTO.type);
 			
 			if(reimbService.newReimbursement(reimbursement)) {
-				//log.info(response);
 				response.getWriter().print("New Reimbursement Request");
 				response.setStatus(201);
 			}else {
-				//log.warn("Request: "+ request + "Response: "+response);
 				response.getWriter().print("Request couldn't be inserted into DB");
 				response.setStatus(409);
 				log.warn("Request couldn't be inserted into DB. Status Code: "+409);
 			}
 		}else {
 			response.setStatus(405);
+			log.warn("Wrong HTTP method was used. Status Code 405.");
 		}
 
 	}
@@ -101,12 +100,14 @@ public class ReimbController {
 			if(statusChanged.contains(false)) {
 				response.setStatus(500);
 				response.getWriter().print("Not all of the requests were resolved.");
+				log.error("At least one resolve request didn't process. Status Code 500.");
 			}else {
 				response.setStatus(200);
 			}
 
 		}else {
 			response.setStatus(405);
+			log.warn("Wrong HTTP method was used. Status Code 405.");
 		}
 	}
 	

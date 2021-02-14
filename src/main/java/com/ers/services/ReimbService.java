@@ -31,16 +31,13 @@ public class ReimbService {
 	public boolean newReimbursement(Reimbursement reimbursement) {
 		if (reimbursement != null && newStatus() && newType(reimbursement.getType())
 				&& reimbDao.newReimb(reimbursement)) {
-//			newStatus();
-//			newType(reimbursement.getType());
-//			reimbDao.newReimb(reimbursement);
 			return true;
 		}
 		return false;
 	}
 
-	public List<Reimbursement> allPending() {
-		List<Reimbursement> allPending = reimbDao.allPending();
+	public List<Reimbursement> allPending(int userId) {
+		List<Reimbursement> allPending = reimbDao.allPending(userId);
 		for (Reimbursement r : allPending) {
 			r.setType(userDAO.getType(r.getTypeId()));
 			String status = userDAO.getStatus(r.getStatusId());
@@ -101,14 +98,4 @@ public class ReimbService {
 		return null;
 	}
 	
-//	public static void main(String[] args) {
-//		ReimbService r = new ReimbService();
-//		List<Reimbursement> reimb = r.allPending();
-//		List<Reimbursement> reimb2 = r.allPendingById(2);
-//		System.out.println(reimb);
-//		System.out.println(reimb2);
-//	}
-
 }
-
-//sdf.format(t.getDate()));

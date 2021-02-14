@@ -1,11 +1,10 @@
 const url = 'http://localhost:8080/project-1/';
 let userRole;
-
+let pendingStatus = [];
 
 document.getElementById("loginbtn").addEventListener("click", login);
 
 async function login() {
-    console.log("In Login Function")
     let inputtedUsername = document.getElementById("username").value;
     let inputtedPassword = document.getElementById("password").value;
 
@@ -23,14 +22,10 @@ async function login() {
         //will also require this value in order to sent the cookie back.
     });
 
-    console.log(loginResponse);
-
     if (loginResponse.status === 200) {
-        console.log("In if-statement");
         let user = await loginResponse.json();//get json response and store in JS object
         document.getElementById("login-row").innerHTML = "";//puts no content into this element
 
-        console.log(user);
         userRole = user.role;
 
         //create logout button
@@ -51,7 +46,6 @@ async function login() {
         let adjustPadding = document.getElementById("login-row");
         adjustPadding.id = "data";
         document.getElementById("identifyuser").innerText = userRole + ": " + user.firstName + " " + user.lastName;
-        console.log("Request Succeeded!")
 
         //modify tables/develop tables
         let newReimbTable = document.getElementById("table1");
@@ -75,16 +69,36 @@ async function login() {
         let newAmount = document.getElementById("input-amount");
         let inputAmount = document.createElement("input");
         inputAmount.id = 'getamount';
+        newAmount.type = "text";
         newAmount.appendChild(inputAmount);
+        document.getElementById('dollar').innerHTML = '$';
 
         let newDescription = document.getElementById('input-description');
         let inputDescription = document.createElement('input');
         inputDescription.id = 'getdescript';
+        inputDescription.type = "text";
         newDescription.appendChild(inputDescription);
 
         let newType = document.getElementById("input-type");
-        let inputType = document.createElement('input');
+        let inputType = document.createElement('select');
         inputType.id = "get-type";
+
+        let option1 = document.createElement("option");
+        option1.text = "food";
+        inputType.append(option1);
+
+        let option2 = document.createElement("option");
+        option2.text = "lodging";
+        inputType.append(option2);
+
+        let option3 = document.createElement("option");
+        option3.text = "travel";
+        inputType.append(option3);
+
+        let option4 = document.createElement("option");
+        option4.text = "other";
+        inputType.append(option4);
+
         newType.appendChild(inputType);
 
         //create new reimbursement button
@@ -111,7 +125,20 @@ async function login() {
         pendingBtn.className = "btn btn-danger";
         pending.appendChild(pendingBtn);
         document.getElementById("pendingbtn").innerText = "Find Pending";
-        document.getElementById("pendingbtn").addEventListener("click", findpending);
+        document.getElementById("pendingbtn").addEventListener("click", findPending);
+
+        //create button for resolving requests (for managers only)
+        if (userRole === 'Manager') {
+            let update = document.getElementById('updatepend');
+            let resolve = document.createElement('button');
+            resolve.id = 'resolve-btn';
+            resolve.className = 'btn btn-danger';
+            update.appendChild(resolve);
+            document.getElementById('resolve-btn').innerText = 'Resolve Requests';
+            document.getElementById('resolve-btn').addEventListener('click', resolveRequests);
+        } else {
+            console.log("Sorry, you are not a manager.")
+        }
 
         document.getElementById("allhead").innerText = "All Reimbursements:";
         document.getElementById("userid").innerText = "EmployeeId";
@@ -133,7 +160,7 @@ async function login() {
 
 
     } else {
-        console.log("Request Failed :(")
+        console.log("Login Failed :(")
         let error = document.getElementById("login-row");
         let message = document.createElement("h6");
         message.id = "message";
@@ -146,55 +173,95 @@ async function logoutFunc() {
     let logoutResponse = await fetch(url + "logout", { credentials: "include" });
     if (logoutResponse.status === 200) {
         userRole = null;
+        pendingStatus = [];//empty pending status array just in case it is nonempty
         console.log("Logged Out Successfully");
+
+        //Clear Page
+        let pageContent = document.getElementById("fullcontainer");
+        let logoutButton = document.getElementById("header");
+        pageContent.innerHTML = "";
+        logoutButton.innerHTML = "";
+
+        //Back to Login/Rebuild the Page
+        pageContent.innerHTML = "<div class='row' id='login-row'> <h4 class='col-lg-12' id='enter'>Please Enter Your Username and Password:</h4> <input class='col-sm-12 form-control' id='username' type='text' placeholder='USERNAME'> <input class='col-sm-12 form-control' id='password' type='password' placeholder='PASSWORD'> <br> <br> <button id='loginbtn' class='btn btn-danger'>Login</button> </div> <div id='user'></div> <br><br><br><br> <div class='row' id='newreimb-row'><h4 class='col-lg-12' id='newhead'></h4><table id='table1'> <thead> <tr> <th id='newamount'></th> <th id='newdescription'></th> <th id='newtype'></th></tr> </thead> <tbody id='newreimb'> <tr id='newreimbinfo'> <td id='input-amount'> <span id ='dollar'></span> </td> <td id='input-description'> </td> <td id='input-type'> </td> </tr> </tbody> </table> <div id='sendreimb'></div> <h6 id='amount-message'></h6> </div> <br><br> <div class='row' id='pend-row'> <h4 class='col-lg-12' id='pendhead'></h4> <div id='getpending'></div> <table id='table2'> <thead> <tr> <th id='penduserid'></th> <th id='pendamount'></th> <th id='penddescription'></th> <th id='pendtype'></th> <th id='pendsubmit'></th> <th id='pendstatus'></th> </tr> </thead> <tbody id='pendreimb'></tbody> </table> <div id='findpend'></div> <div id='updatepend'></div> </div> <br><br> <div class='row' id='allreimb-row'> <h4 class='col-lg-12' id='allhead'></h4> <table id='table3'> <thead><tr> <th id='userid'></th><th id='amount'></th><th id='description'></th><th id='type'></th> <th id='submitted'></th> <th id='resolved'></th> <th id='status'></th> </tr></thead> <tbody id='allreimb'></tbody> </table> <div id='getall'></div> </div>";
+        document.getElementById("loginbtn").addEventListener("click", login);
+
     } else {
-        console.log("Logout Failed")
+        console.log("Logout Failed. The status code is " + logoutResponse.status);
     }
 };
 
 async function sendReimb() {
-    console.log("Making new Reimbursement Request");
+    console.log("Making new Reimbursement Request:");
 
-    let newAmount = document.getElementById("getamount").value;
-    newAmount.className = "col-sm-4 form-control";
-    newAmount.type = "text";
+    document.getElementById("amount-message").innerText = "";//wipe out the message if it exists
+
+    let newAmount = document.getElementById("getamount");
     let newDescript = document.getElementById("getdescript").value;
-    newDescript.className = "col-sm-4 form-control";
-    newDescript.type = "text";
     let newType = document.getElementById("get-type").value;
-    newType.className = "col-sm-4 form-control";
-    newType.type = "text";
+    
+    //use regex to confirm that inputted amount is in the correct form
+    const currency = /^[^ ][0-9]{0,}(\.[0-9]{1,2})?$/;//no empty characters or spaces and a number of the form x---x.xx, where the .xx is optional
 
-    newAmount = Number(newAmount);
-    console.log(newAmount);
+    if (currency.test(newAmount.value) && Number(newAmount.value) > 0 && !isNaN(Number(newAmount.value))) {
 
-    let reimbursement = {
-        amount: newAmount,
-        description: newDescript,
-        type: newType
-    }
+        newAmount = Number(newAmount.value);
+        console.log(newAmount);
 
-    console.log(reimbursement);
+        let reimbursement = {
+            amount: newAmount,
+            description: newDescript,
+            type: newType
+        };
 
-    let response = await fetch(url + "new", {
-        method: "POST",
-        body: JSON.stringify(reimbursement),
-        credentials: "include"
-    });
+        let response = await fetch(url + "new", {
+            method: "POST",
+            body: JSON.stringify(reimbursement),
+            credentials: "include"
+        });
 
-    console.log(response.status);
+        if (response.status === 201) {
+            console.log("Reimbursement recorded:");
+            console.log(reimbursement);
+            document.getElementById("getamount").value = "";//clear out the amount
+            document.getElementById("getdescript").value = "";//clear out the description
 
-    if (response.status === 201) {
-        //document.getElementById("newbtn").innerText = "Request Submitted";
-        console.log("Reimbursement recorded");
+        } else {
+            document.getElementById("amount-message").innerText = "Reimbursement Request Couldn't be Sent";
+
+            document.getElementById("getdescript").value = "";//clear out the description
+
+            //without this the input for the amount does weird things
+            let newAmount = document.getElementById("input-amount");
+            newAmount.innerHTML = "";
+            let dollarSign = document.createElement('span');
+            dollarSign.id = 'dollar';
+            dollarSign.innerHTML = '$';
+            newAmount.appendChild(dollarSign);
+        }
+
     } else {
-        document.getElementById("newbtn").innerText = "Reimbursement Request Couldn't be Sent";
+        let message = document.getElementById("amount-message");
+        message.innerText = "Please Enter a Valid Amount";
+
+        //without this the input for the amount does weird things
+        let newAmount = document.getElementById("input-amount");
+        newAmount.innerHTML = "";
+        let dollarSign = document.createElement('span');
+        dollarSign.id = 'dollar';
+        dollarSign.innerHTML = '$';
+        newAmount.appendChild(dollarSign);
+
+        let inputAmount = document.createElement("input");
+        inputAmount.id = 'getamount';
+        newAmount.appendChild(inputAmount);
+        console.log(newAmount.value + " is not a valid reimbursement amount.");
     }
 }
 
 async function getAll() {
     console.log("In get all Reimbursements");
-    document.getElementById("allreimb").innerHTML = "";
+    document.getElementById("allreimb").innerHTML = "";//empty table just in case it is nonempty
     if (userRole === "Manager") {
         let allResponse = await fetch(url + "all", { credentials: "include" });
         console.log(allResponse.status);
@@ -242,10 +309,8 @@ async function getAll() {
         }
 
     } else {
-        // let allResponse = await fetch(url + "allforuser", { credentials: "include" });
-        // console.log(allResponse.status);
 
-        let allResponse = await fetch(url + "allforuser", {
+        let allResponse = await fetch(url + "all/employee", {
             method: "POST",
             body: JSON.stringify(""),
             credentials: "include"
@@ -294,18 +359,29 @@ async function getAll() {
     }
 }
 
-async function findpending(){
-    document.getElementById("pendreimb").innerHTML = "";
+async function findPending() {
+    document.getElementById("pendreimb").innerHTML = "";//empty table just in case it is nonempty
     if (userRole === "Manager") {
-        let pendResponse = await fetch(url + "allpending", { credentials: "include" });
-        console.log(pendResponse.status);
+        pendingStatus = [];
+        let pendResponse = await fetch(url + "pending/manager", { credentials: "include" });
 
         if (pendResponse.status === 200) {
             let all = await pendResponse.json();//get json response and store in JS object
-            //data is going to be an array because we are going to get all of the Reimbursements
+            //data is going to be an array because we are going to get all of the pending reimbursements
+            console.log("All Pending Reimbursement Requests (Other Than Logged in Manager):");
 
             for (let r of all) {
                 console.log(r);
+
+                //need to encapsulate status and statusId in front end; should have done this in the back end in the models at the beginning
+                let status = {
+                    statusId: r.statusId,
+                    statusType: r.status
+                };
+
+                pendingStatus.push(status);//add status object to array
+                //note at this point all the status types should show as "pending"
+
                 let row = document.createElement("tr");
 
                 let cell1 = document.createElement("td");//create the cell
@@ -328,21 +404,37 @@ async function findpending(){
                 cell5.innerHTML = r.submitted;//fills the cell
                 row.appendChild(cell5);//appends the cell
 
-                let cell6 = document.createElement("td");//create the cell
-                cell6.innerHTML = r.status;//fills the cell
-                row.appendChild(cell6);//appends the cell
+                //create options for resolving requests (only for managers)
+                let cell6 = document.createElement("td");
+                let resolve = document.createElement("select");
+                resolve.className = "status-options";
+
+                let option1 = document.createElement("option");
+                option1.text = r.status;
+                resolve.appendChild(option1);
+
+                let option2 = document.createElement("option");
+                option2.text = "approve";
+                resolve.appendChild(option2);
+
+                let option3 = document.createElement("option");
+                option3.text = "deny";
+                resolve.appendChild(option3);
+
+                cell6.appendChild(resolve);
+                row.appendChild(cell6);
 
                 document.getElementById("pendreimb").appendChild(row);
             }
+            console.log("pendingStatus array:");
+            console.log(pendingStatus);
         } else {
-            console.log("status is not 200");
+            console.log("status code is not 200");
         }
-
+        //If the user is not a manager, then they are a regular employee and cannot resolve pending reimbursement requests
     } else {
-        // let allResponse = await fetch(url + "allforuser", { credentials: "include" });
-        // console.log(allResponse.status);
 
-        let pendResponse = await fetch(url + "userpending", {
+        let pendResponse = await fetch(url + "pending/employee", {
             method: "POST",
             body: JSON.stringify(""),
             credentials: "include"
@@ -351,7 +443,7 @@ async function findpending(){
         if (pendResponse.status === 200) {
             let all = await pendResponse.json();//get json response and store in JS object
             //data is going to be an array because we are going to get all of the Reimbursements
-            console.log(all);
+            console.log("All User Pending Requests:");
 
             for (let r of all) {
                 console.log(r);
@@ -383,8 +475,53 @@ async function findpending(){
 
                 document.getElementById("pendreimb").appendChild(row);
             }
-
         }
     }
 }
-// newAmount.className = "form-control";
+
+async function resolveRequests() {
+    let resolved = [];
+    let requests = document.getElementById('pendreimb').rows;//get the body of the table
+    let selectTags = document.getElementsByClassName("status-options");//get all of the select tags
+    console.log("There are " + requests.length + " pending requests.");
+
+    for (let i = 0; i < requests.length; i++) {
+        let statusName = selectTags[i].options[selectTags[i].selectedIndex].value;//get the selected status from a select tag
+        if (statusName === "deny") {
+            let status = {
+                statusId: pendingStatus[i].statusId,
+                statusType: "denied"
+            };
+            resolved.push(status);
+        } else if (statusName === "approve") {
+            let status = {
+                statusId: pendingStatus[i].statusId,
+                statusType: "approved"
+            };
+            resolved.push(status);
+        }
+        else {
+            console.log("pending request was not resolved.");
+        }
+    }       
+
+    if (resolved.length > 0) {
+        let response = await fetch(url + "pending/manager/resolve", {
+            method: "PUT",
+            body: JSON.stringify(resolved),
+            credentials: "include"
+        });
+
+        if (response.status === 200) {
+            console.log("The resolved requests are:");
+            console.log(resolved);
+            findPending();
+        } else {
+            console.log("I'm sorry. You got a " + response.status);
+            console.log(response);
+        }
+
+    } else {
+        console.log("No requests were resolved because the manager did not change the status.")
+    }
+}

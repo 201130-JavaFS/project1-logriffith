@@ -22,15 +22,4 @@ public class DbConnection {
 		return connection;
 	}
 	
-//	public static void main(String[] args) {
-//		try(Connection conn = DbConnection.getConnection()){
-//			System.out.println("Connection Successful!");
-//		} catch(SQLException e) {
-//			e.printStackTrace();
-//		} catch (ClassNotFoundException e1) {
-//			
-//			e1.printStackTrace();
-//		}
-//	}
-	
 }

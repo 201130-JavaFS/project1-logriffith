@@ -73,3 +73,6 @@ The back-end system shall use JDBC to connect to a Postgres database. The applic
 
 ## Usage
 In Spring Tool Suite, right-click on the project and under "Run-As" select "Run on Server." Next, select the path for Tomcat 9 on the system (only needed the first time the application runs) and click finish. In the "frontend" folder in the local repository, double click on the ers.html file to open the application in a browser. Finally, login using the usernames and passwords listed in ERS_Insert.sql.
+
+## Contributor
+* [Lew Griffith](https://github.com/logriffith)
